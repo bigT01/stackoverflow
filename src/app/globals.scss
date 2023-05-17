@@ -28,4 +28,23 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(65, 156, 176, 0.5) 0%, rgba(92, 99, 159, 0.5) 50%, rgba(139, 65, 174, 0.5) 100%);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 

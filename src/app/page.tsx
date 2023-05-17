@@ -54,7 +54,7 @@ export default function Home() {
                         {/*left side*/}
                         <div className="w-4/12 h-full">
                             {/*ratings*/}
-                            <div className="p-4 w-full 2xl:h-[55%] lg:h-[42%] bg-[#33333370] overflow-scroll mb-5">
+                            <div className="p-4 w-full 2xl:h-[55%] lg:h-[42%] bg-[#33333370] overflow-y-scroll mb-5">
                                 <table className='w-full'>
                                     <thead>
                                     <tr className='text-left'>
