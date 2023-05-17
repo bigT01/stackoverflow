@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'TTOctosquares';
+    src: url('TTOctosquares-Regular.eot');
+    src: url('TTOctosquares-Regular.eot?#iefix') format('embedded-opentype'),
+        url('TTOctosquares-Regular.woff2') format('woff2'),
+        url('TTOctosquares-Regular.woff') format('woff'),
+        url('TTOctosquares-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TTOctosquares';
+    src: url('TTOctosquares-Medium.eot');
+    src: url('TTOctosquares-Medium.eot?#iefix') format('embedded-opentype'),
+        url('TTOctosquares-Medium.woff2') format('woff2'),
+        url('TTOctosquares-Medium.woff') format('woff'),
+        url('TTOctosquares-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TTOctosquares';
+    src: url('TTOctosquares-Bold.eot');
+    src: url('TTOctosquares-Bold.eot?#iefix') format('embedded-opentype'),
+        url('TTOctosquares-Bold.woff2') format('woff2'),
+        url('TTOctosquares-Bold.woff') format('woff'),
+        url('TTOctosquares-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TTOctosquares-DBold';
+    src: url('TTOctosquares-DBold.eot');
+    src: url('TTOctosquares-DBold.eot?#iefix') format('embedded-opentype'),
+        url('TTOctosquares-DBold.woff2') format('woff2'),
+        url('TTOctosquares-DBold.woff') format('woff'),
+        url('TTOctosquares-DBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+

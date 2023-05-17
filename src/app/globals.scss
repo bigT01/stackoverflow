@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "public/fonts/stylesheet.css";
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -17,6 +18,7 @@
 }
 
 body {
+  font-family: TTOctosquares;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -25,3 +27,5 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
