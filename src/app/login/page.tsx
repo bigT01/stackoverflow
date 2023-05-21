@@ -2,11 +2,11 @@
 import Image from "next/image";
 import {FormEvent, useEffect, useState} from "react";
 import { useRouter } from 'next/navigation';
+import axios from "axios";
 
 
 const Login = () => {
     const router = useRouter()
-
 
     const [isSignIn, setIsSignIn] = useState(true)
     const [nickname, setNickname] = useState<string>("")
@@ -70,8 +70,11 @@ const Login = () => {
 
     const handleSubmit = (e:FormEvent) => {
         e.preventDefault()
-        console.log(nickname, email, password, confirmPassword)
-        router.push('/')
+        axios.post('https://devhouse-5sts.onrender.com/login', {
+            username: nickname,
+            password
+        }).then(res => {console.log(res)})
+            .catch(err => {console.log(err)})
     }
 
     return(
