@@ -4,10 +4,16 @@ import Tags from "@/Components/Tag/Tags";
 import Rating from "@/Components/RatingUsers/Rating";
 import VariantQuestion from "@/Components/VariantsQuestions";
 import PostShort from "@/Components/Posts/PostShort";
+import {UseMainContext} from "@/Context/MainContext";
+
 
 
 export default function Home() {
+    const {setAuth, isAuth} = UseMainContext()
+
+
     useEffect(() => {
+        // setAuth(true)
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
 
@@ -16,6 +22,8 @@ export default function Home() {
             document.body.style.overflow = 'auto';
         };
     }, []);
+
+    useEffect(() => {console.log(isAuth)}, [isAuth])
 
     return (
         <div className='w-full h-full'>

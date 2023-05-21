@@ -1,8 +1,13 @@
 'use client';
 import Image from "next/image";
 import {FormEvent, useEffect, useState} from "react";
+import { useRouter } from 'next/navigation';
+
 
 const Login = () => {
+    const router = useRouter()
+
+
     const [isSignIn, setIsSignIn] = useState(true)
     const [nickname, setNickname] = useState<string>("")
     const [email, setEmail] = useState<string>("")
@@ -23,6 +28,7 @@ const Login = () => {
     const [isSignUpEnter, setIsSignUpEnter] = useState(false)
 
     useEffect(() => {
+
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
 
@@ -65,6 +71,7 @@ const Login = () => {
     const handleSubmit = (e:FormEvent) => {
         e.preventDefault()
         console.log(nickname, email, password, confirmPassword)
+        router.push('/')
     }
 
     return(

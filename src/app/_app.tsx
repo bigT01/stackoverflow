@@ -3,13 +3,19 @@ import './globals.scss';
 import "swiper/css";
 import "swiper/css/navigation";
 import RootLayout from "@/app/layout";
+import {MainProvider, UseMainContext} from "@/Context/MainContext";
+
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
-            <RootLayout>
-                <Component {...pageProps} />
-            </RootLayout>
+            {/*<MainProvider>*/}
+                <RootLayout>
+                    <MainProvider>
+                        <Component {...pageProps} />
+                    </MainProvider>
+                </RootLayout>
+            {/*</MainProvider>*/}
         </>
     )
 }
