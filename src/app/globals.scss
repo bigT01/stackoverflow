@@ -48,56 +48,5 @@ body {
   background: #555;
 }
 
-.SignIn-exiting{
-  animation: SignInAnimate 1s ease-out forwards;
-}
-
-.SignUp-exiting{
-  animation: SignUpAnimate 1s ease-out forwards;
-}
-
-.SignIn-entering{
-  animation: SignInEntering 1s ease-out forwards;
-}
-
-.SignUp-entering{
-  animation: SignUpEntering 1s ease-out forwards;
-}
-
-@keyframes SignInAnimate {
-  from{
-    transform: translateX(0%);
-  }
-  to{
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes SignInEntering {
-  from{
-    transform: translateX(-100%);
-  }
-  to{
-    transform: translateX(0%);
-  }
-}
-
-@keyframes SignUpAnimate {
-  from{
-    transform: translateX(0%);
-  }
-  to{
-    transform: translateX(100%);
-  }
-}
-
-@keyframes SignUpEntering {
-  from{
-    transform: translateX(100%);
-  }
-  to{
-    transform: translateX(0%);
-  }
-}
 
 
