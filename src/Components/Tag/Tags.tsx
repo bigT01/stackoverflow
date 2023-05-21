@@ -1,4 +1,4 @@
-import Tag from "@/app/Components/Tag/Tag";
+import Tag from "@/Components/Tag/Tag";
 
 const Tags = () => {
     return(

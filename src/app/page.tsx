@@ -1,9 +1,9 @@
 'use client';
 import {useEffect} from "react";
-import Tags from "@/app/Components/Tag/Tags";
-import Rating from "@/app/Components/RatingUsers/Rating";
-import VariantQuestion from "@/app/Components/VariantsQuestions";
-import PostShort from "@/app/Components/Posts/PostShort";
+import Tags from "@/Components/Tag/Tags";
+import Rating from "@/Components/RatingUsers/Rating";
+import VariantQuestion from "@/Components/VariantsQuestions";
+import PostShort from "@/Components/Posts/PostShort";
 
 
 
