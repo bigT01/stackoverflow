@@ -1,4 +1,4 @@
-import RatingUser from "@/Components/RatingUsers/RatingUser";
+import RatingUser from "@/app/Components/RatingUsers/RatingUser";
 
 const Rating = () => {
     return(
