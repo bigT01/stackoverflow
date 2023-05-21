@@ -1,8 +1,21 @@
 'use client';
 import Image from "next/image";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {Navigation} from "swiper";
+import {SwiperSlide, Swiper} from "swiper/react";
 
 const Login = () => {
+    const [isSignIn, setIsSignIn] = useState(true)
+    const [isSignInExiting, setIsSignInExiting] = useState(false)
+    const [isSignInExit, setIsSignInExit] = useState(false)
+    const [isSignInEntering, setIsSignInEntering] = useState(false)
+    const [isSignInEnter, setIsSignInEnter] = useState(true)
+
+    const [isSignUpExiting, setIsSignUpExiting] = useState(false)
+    const [isSignUpExit, setIsSignUpExit] = useState(true)
+    const [isSignUpEntering, setIsSignUpEntering] = useState(false)
+    const [isSignUpEnter, setIsSignUpEnter] = useState(false)
+
     useEffect(() => {
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
@@ -11,12 +24,44 @@ const Login = () => {
         return () => {
             document.body.style.overflow = 'auto';
         };
+
     }, []);
+
+    useEffect(() => {
+        if(!isSignIn){
+            setIsSignInEnter(false)
+            setIsSignUpExit(false)
+            setIsSignInExiting(true)
+            setIsSignUpEntering(true)
+            let timeOut = setTimeout(() => {
+                setIsSignInExit(true)
+                setIsSignUpEnter(true)
+                setIsSignInExiting(false)
+                setIsSignUpEntering(false)
+            }, 1000)
+            return () => clearTimeout(timeOut)
+        }
+        if(isSignIn && isSignInExit){
+            setIsSignInExit(false)
+            setIsSignUpEnter(false)
+            setIsSignInEntering(true)
+            setIsSignUpExiting(true)
+            let timeOut = setTimeout(() => {
+                setIsSignInEnter(true)
+                setIsSignUpExit(true)
+                setIsSignInEntering(false)
+                setIsSignUpExiting(false)
+            }, 1000)
+            return () => clearTimeout(timeOut)
+        }
+    }, [isSignIn])
+
+
 
     return(
         <div className='container'>
-            <div className='flex w-screen h-screen bg-[#22202F]'>
-                <div className="w-1/2 h-full relative bg-[#c0c0c01a]">
+            <div className='flex w-screen h-screen bg-[#22202F] '>
+                <div className="w-1/2 h-full relative bg-[#c0c0c01a] relative z-10">
                     <div className="px-40 pt-40 mb-auto flex items-center justify-center">
                         <div>
                             <Image src={'./logo.svg'} alt={'icon-logo'} width={435} height={100.25} className='mb-16'/>
@@ -39,25 +84,39 @@ const Login = () => {
                                     <input type="text" className='h-auto w-full border-none text-[18px] placeholder-gray-100' style={{background:'none'}} placeholder='Enter password'/>
                                 </div>
 
-                                <button className='text-white text-[18px] px-12 py-3' style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%);'}}>ENTER</button>
+                                <button className='text-white text-[18px] px-12 py-3' style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}>ENTER</button>
                             </form>
                         </div>
 
                     </div>
                     <div className="absolute bottom-0 w-full">
-                        <button className='w-1/2 align-middle py-3 relative' style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%);'}}>
+                        <button className='w-1/2 align-middle py-3 relative bg-[]' style={{background: `${isSignIn ? 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)' : "black"}`}} onClick={() => {
+                            if(!isSignInEntering && !isSignInExiting){
+                                setIsSignIn(true)
+                            }
+                        }}>
                             <span>SIGN IN</span>
-                            <span className='absolute bottom-0 w-full h-[3px] left-0' style={{background: 'linear-gradient(270deg, #388394 0%, #515898 50%, #823CA4 100%);'}}></span>
+                            {isSignIn && <span className='absolute bottom-0 w-full h-[3px] left-0'
+                                   style={{background: 'linear-gradient(270deg, #388394 0%, #515898 50%, #823CA4 100%)'}}/>}
                         </button>
-                        <button className='w-1/2 align-middle py-3' style={{background: 'black'}}>SIGN IN</button>
+
+                        <button className='w-1/2 align-middle py-3 cursor-pointer relative' style={{background: `${!isSignIn ? 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)' : "black"}`}} onClick={() => {
+                            if(!isSignInEntering && !isSignInExiting){
+                                setIsSignIn(false)
+                            }
+                        }}>
+                            <span>SIGN UP</span>
+                            {!isSignIn && <span className='absolute bottom-0 w-full h-[3px] left-0'
+                                               style={{background: 'linear-gradient(270deg, #388394 0%, #515898 50%, #823CA4 100%)'}}/>}
+                        </button>
                     </div>
                 </div>
 
-                <div className="w-1/2 h-full flex items-center justify-center bg-[#22202F]">
-                    <div className='w-full h-full relative'>
-                        <Image src='/signinPhoto.png' alt='img-signIn' fill={true} className='object-cover'/>
+                <div className="w-1/2 h-screen flex items-center justify-center bg-[#22202F] relative z-0">
+                    <div className='w-full h-full relative overflow-hidden flex'>
+                        <Image src='/signinPhoto.png' alt='img-signIn' fill={true} className={`object-cover ${isSignInExiting ? 'SignIn-exiting' : null} ${isSignInEntering ? 'SignIn-entering' : null} ${isSignInEnter ? "translate-x-[0%]" : null} ${isSignInExit ? "translate-x-[-100%]" : null}`}/>
+                        <Image src='/signUpPhoto.png' alt='img-signIn' fill={true} className={`object-cover ${isSignUpExiting ? 'SignUp-exiting': null} ${isSignUpEntering ? "SignUp-entering": null} ${isSignUpEnter ? "translate-x-[0%]" : null} ${isSignUpExit ? "translate-x-[100%]" : null}`}/>
                     </div>
-
                 </div>
             </div>
         </div>
