@@ -11,9 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <>
             {/*<MainProvider>*/}
                 <RootLayout>
-                    <MainProvider>
                         <Component {...pageProps} />
-                    </MainProvider>
                 </RootLayout>
             {/*</MainProvider>*/}
         </>
