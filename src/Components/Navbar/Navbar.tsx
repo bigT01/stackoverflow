@@ -1,15 +1,36 @@
 'use client';
-import {UseMainContext} from "@/Context/MainContext";
+
 import Image from "next/image";
 import {usePathname} from "next/navigation";
+import {UseMainContext} from "@/Context/MainContext";
+import {useEffect, useRef, useState} from "react";
+import Link from "next/link";
 
 
 const Navbar = () => {
-    const {isAuth} = UseMainContext()
     const pathName = usePathname()
+    const { isAuth } = UseMainContext()
+    const popupRef = useRef(null);
+
+    const [isProfile, setIsProfile] = useState<boolean>(false)
 
 
-    return isAuth || pathName !== '/login' ? (
+    useEffect(() => {
+        function handleClickOutside(event:any) {
+            // @ts-ignore
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setIsProfile(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [popupRef]);
+
+    return isAuth && pathName !== '/login' ? (
         <nav className='w-full bg-[#11111170] h-[65px] flex items-center mb-4'>
             <div className='mx-auto flex items-center w-full' style={{maxWidth: '95%'}}>
                 <Image src='/logo.svg' alt='logo-icon' width={182} height={42} className={'mr-8'}/>
@@ -44,7 +65,18 @@ const Navbar = () => {
                             fill="white"/>
                     </svg>
 
-                    <Image src='/profile.png' alt='img-profile' width={45} height={45}/>
+                    <div className='relative'>
+                        <button onClick={() => setIsProfile(old => !old)} >
+                            <Image src='/profile.png' alt='img-profile' width={45} height={45}/>
+                        </button>
+
+                        {isProfile && <div className="absolute right-0 top-[100%] 2xl:w-[250px] lg:w-[200px] py-6 px-2 bg-black text-white z-20 flex flex-col items-end gap-2" ref={popupRef}>
+                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Profile page</Link>
+                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Saved questions</Link>
+                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Settings</Link>
+                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Log out</Link>
+                        </div>}
+                    </div>
                 </div>
             </div>
         </nav>

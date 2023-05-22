@@ -1,5 +1,5 @@
 'use client';
-import {createContext, ReactNode, useContext, useEffect, useState} from "react";
+import {createContext, ReactNode, useContext, useState} from "react";
 
 type MainProviderType = {
     children: ReactNode
@@ -8,6 +8,8 @@ type MainProviderType = {
 type MainContextType = {
     setAuth: (data: boolean) => void,
     isAuth: boolean,
+    sessionToken: (token: string) => void,
+    token: string
 }
 
 
@@ -20,9 +22,15 @@ export const UseMainContext = () => {
 
 export const MainProvider = ({children}: MainProviderType) =>{
     const [isAuth, setIsAuth] = useState<boolean>(false)
+    const [token, setToken] = useState<string>('')
+
 
     const setAuth = (isAuth: boolean) => {
         setIsAuth(isAuth)
+    }
+
+    const sessionToken = async (token: string) => {
+        setToken(token)
     }
 
 
@@ -30,6 +38,8 @@ export const MainProvider = ({children}: MainProviderType) =>{
         <MainContext.Provider value={{
             setAuth,
             isAuth,
+            sessionToken,
+            token
         }}>
             {children}
         </MainContext.Provider>

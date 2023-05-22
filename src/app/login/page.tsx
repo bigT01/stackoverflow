@@ -2,13 +2,16 @@
 import Image from "next/image";
 import {FormEvent, useEffect, useState} from "react";
 import { useRouter } from 'next/navigation';
-import axios from "axios";
-
+import axios from "@/axios";
+import {UseMainContext} from "@/Context/MainContext";
 
 const Login = () => {
     const router = useRouter()
+    const {isAuth, setAuth, sessionToken} = UseMainContext()
 
     const [isSignIn, setIsSignIn] = useState(true)
+
+    // form inputs place
     const [nickname, setNickname] = useState<string>("")
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -28,7 +31,6 @@ const Login = () => {
     const [isSignUpEnter, setIsSignUpEnter] = useState(false)
 
     useEffect(() => {
-
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
 
@@ -70,11 +72,20 @@ const Login = () => {
 
     const handleSubmit = (e:FormEvent) => {
         e.preventDefault()
-        axios.post('https://devhouse-5sts.onrender.com/login', {
+
+
+        axios.post('/api/login', {
             username: nickname,
-            password
-        }).then(res => {console.log(res)})
-            .catch(err => {console.log(err)})
+            password,
+        })
+            .then((res) => {
+                if(res.data){
+                    setAuth(true)
+                    sessionToken(res.data)
+                    router.push('/')
+                }
+            })
+            .catch(err => console.log(err))
     }
 
     return(
