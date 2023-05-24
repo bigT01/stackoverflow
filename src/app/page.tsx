@@ -18,6 +18,7 @@ export default function Home() {
         if (!isAuth) {
             router.push('/login')
         }
+
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
 
