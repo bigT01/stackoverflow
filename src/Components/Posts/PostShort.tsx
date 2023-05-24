@@ -1,24 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
+import {useEffect, useState} from "react";
 
 type PostShort = {
     id: string,
     title: string,
-    imageURL: string,
+    content: string,
     tags: string,
     answers: string,
     status: string
 }
 
-const PostShort = ({id, imageURL, status, answers, tags, title}:PostShort) => {
+const PostShort = ({id, content, status, answers, tags, title}:PostShort) => {
+    const [image64, setImage64] = useState<any>('/defaultQuestion.png')
+
+    useEffect(() => {
+        if(content){
+            const json = JSON.parse(content)
+            setImage64('data:image/png;base64,' + json[3]?.image)
+        }
+
+    }, [])
+
+
     return(
         <Link href={`post/${id}`}>
             <div className="flex gap-3">
-                <Image src={imageURL} alt={`${imageURL}-img`} width={160}
+                <img src={image64} alt={`${id}-img`} width={160}
                        height={92}/>
                 <div>
                     <h4 className="text-[22px] font-bold">{title}</h4>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-2">
                         {/*Tags*/}
                         <p className="font-light text-[17px] opacity-50">Tags: <span>{tags}</span>
                         </p>

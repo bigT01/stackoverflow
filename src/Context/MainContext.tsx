@@ -8,8 +8,10 @@ type MainProviderType = {
 type MainContextType = {
     setAuth: (data: boolean) => void,
     isAuth: boolean,
-    sessionToken: (token: string) => void,
-    token: string
+    setUser: (userId: string) => void,
+    userId: string,
+    isAnswer: boolean,
+    setAnswer: (answer: boolean) => void,
 }
 
 
@@ -22,15 +24,20 @@ export const UseMainContext = () => {
 
 export const MainProvider = ({children}: MainProviderType) =>{
     const [isAuth, setIsAuth] = useState<boolean>(false)
-    const [token, setToken] = useState<string>('')
+    const [userId, setUserId] = useState<string>('')
+    const [isAnswer, setIsAnswer] = useState<boolean>(false)
 
 
     const setAuth = (isAuth: boolean) => {
         setIsAuth(isAuth)
     }
 
-    const sessionToken = async (token: string) => {
-        setToken(token)
+    const setUser = (userId: string) => {
+        setUserId(userId)
+    }
+
+    const setAnswer = (isAnswer: boolean) => {
+        setIsAnswer(isAnswer)
     }
 
 
@@ -38,8 +45,10 @@ export const MainProvider = ({children}: MainProviderType) =>{
         <MainContext.Provider value={{
             setAuth,
             isAuth,
-            sessionToken,
-            token
+            userId,
+            setUser,
+            isAnswer,
+            setAnswer
         }}>
             {children}
         </MainContext.Provider>

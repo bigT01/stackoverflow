@@ -7,7 +7,7 @@ import {UseMainContext} from "@/Context/MainContext";
 
 const Login = () => {
     const router = useRouter()
-    const {isAuth, setAuth, sessionToken} = UseMainContext()
+    const {isAuth, setAuth, setUser} = UseMainContext()
 
     const [isSignIn, setIsSignIn] = useState(true)
 
@@ -81,7 +81,7 @@ const Login = () => {
             .then((res) => {
                 if(res.data){
                     setAuth(true)
-                    sessionToken(res.data)
+                    setUser(res.data?.userId)
                     router.push('/')
                 }
             })

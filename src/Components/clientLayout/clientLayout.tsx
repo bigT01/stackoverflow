@@ -1,5 +1,5 @@
 "use client"
-import {ReactNode, useEffect} from "react";
+import {useEffect} from "react";
 
 const ClientLayout = ({children,}: { children: React.ReactNode }) => {
 
@@ -13,6 +13,7 @@ const ClientLayout = ({children,}: { children: React.ReactNode }) => {
         };
 
     }, []);
+
     return(
         <div className='flex w-screen h-screen bg-[#22202F] relative top-0'>
             <div className="relative z-10 w-full h-full">

@@ -1,5 +1,5 @@
 'use client';
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Tags from "@/Components/Tag/Tags";
 import Rating from "@/Components/RatingUsers/Rating";
 import VariantQuestion from "@/Components/VariantsQuestions";
@@ -7,26 +7,17 @@ import PostShort from "@/Components/Posts/PostShort";
 import {UseMainContext} from "@/Context/MainContext";
 import {useRouter} from "next/navigation";
 import axios from "@/axios";
+import ResentQuestions from "@/Components/Posts/ResentQuestions";
 
 
 export default function Home() {
     const router = useRouter()
-    const {isAuth, token} = UseMainContext()
+    const {isAuth} = UseMainContext()
 
     useEffect(() => {
-        if (isAuth) {
-            const headers = {
-                'Cookie': `JSESSIONID=${token}`, // Set the JSESSIONID token as a header
-            };
-            // @ts-ignore
-            axios.get('api/users/rank', {headers})
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
-        } else {
+        if (!isAuth) {
             router.push('/login')
         }
-
-
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
 
@@ -67,35 +58,8 @@ export default function Home() {
                         </div>
                         {/*main*/}
                         <div className=' w-full overflow-y-scroll' style={{height: '65%'}}>
-                            <div className=" grid gap-x-6 h-full w-full gap-y-12 2xl:grid-cols-2 lg:grid-cols-1">
-                                {/*inside component*/}
-                                <PostShort id={'12312'} title={'Help me to fix this bug. When I run\n' +
-                                    '                                                IDE to provide this code ...'}
-                                           imageURL={'/defaultQuestion.png'} tags={'JAVA'} answers={'1.200'}
-                                           status={'Accepted'}/>
-                                <PostShort id={'12312'} title={'Help me to fix this bug. When I run\n' +
-                                    '                                                IDE to provide this code ...'}
-                                           imageURL={'/defaultQuestion.png'} tags={'JAVA'} answers={'1.200'}
-                                           status={'Accepted'}/>
-                                <PostShort id={'12312'} title={'Help me to fix this bug. When I run\n' +
-                                    '                                                IDE to provide this code ...'}
-                                           imageURL={'/defaultQuestion.png'} tags={'JAVA'} answers={'1.200'}
-                                           status={'Accepted'}/>
-                                <PostShort id={'12312'} title={'Help me to fix this bug. When I run\n' +
-                                    '                                                IDE to provide this code ...'}
-                                           imageURL={'/defaultQuestion.png'} tags={'JAVA'} answers={'1.200'}
-                                           status={'Accepted'}/>
-                                <PostShort id={'12312'} title={'Help me to fix this bug. When I run\n' +
-                                    '                                                IDE to provide this code ...'}
-                                           imageURL={'/defaultQuestion.png'} tags={'JAVA'} answers={'1.200'}
-                                           status={'Accepted'}/>
-                                <PostShort id={'12312'} title={'Help me to fix this bug. When I run\n' +
-                                    '                                                IDE to provide this code ...'}
-                                           imageURL={'/defaultQuestion.png'} tags={'JAVA'} answers={'1.200'}
-                                           status={'Accepted'}/>
 
-                                <div className="h-20"/>
-                            </div>
+                            <ResentQuestions />
 
                         </div>
 
