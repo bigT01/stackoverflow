@@ -26,10 +26,6 @@ const CodeType = () => {
                 height="250px"
                 value={codeText}
             />
-            <button className="px-4 py-2 h-fit absolute bottom-0 right-0"
-                    style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}>
-                <p className="text-white 2xl:text-[18px] lg:text-[16px] font-medium ">ANSWER</p>
-            </button>
         </div>
     )
 }

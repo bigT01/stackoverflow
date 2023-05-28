@@ -17,7 +17,7 @@ const PostShort = ({id, content, status, answers, tags, title}:PostShort) => {
     useEffect(() => {
         if(content){
             const json = JSON.parse(content)
-            setImage64('data:image/png;base64,' + json[3]?.image)
+            setImage64(json[2]?.image)
         }
 
     }, [])

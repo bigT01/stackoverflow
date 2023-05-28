@@ -51,7 +51,7 @@ const Post = () => {
                 setContent(JSON.parse(post?.content))
             }
             // formatting date to in design
-            const dateString = "2023-05-22T14:18:36.043+00:00";
+            const dateString = post?.createdAt;
             const date = new Date(dateString);
             const day = date.getDate().toString().padStart(2, "0");
             const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -72,11 +72,10 @@ const Post = () => {
     // formatting post photo from base64
     useEffect(() => {
         if(content){
-            setImage64('data:image/png;base64,' + content[3]?.image)
-            content[2]?.code && setCode(content[2]?.code)
+            setImage64(content[2]?.image)
+            content[1]?.code && setCode(content[1]?.code)
 
         }
-        console.log(post)
     }, [content])
 
     // formatting user photo from base64

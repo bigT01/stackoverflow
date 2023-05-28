@@ -21,6 +21,10 @@ type MainContextType = {
     setCodeTexting: (code: any) => void,
     PublishImage: string,
     setPublishingImage: (image64: string) => void,
+    tagName: string,
+    setTag: (TagName: string) => void,
+    description: string,
+    setPublishDescription: (Description: string) => void,
 }
 
 
@@ -39,7 +43,9 @@ export const MainProvider = ({children}: MainProviderType) =>{
 
     const [publishText, setPublishText] = useState<string>('');
     const [codeText, setCodeText] = useState<any>('');
-    const [PublishImage, setPublishImage] = useState<string>('')
+    const [PublishImage, setPublishImage] = useState<string>('');
+    const [tagName, setTagName] = useState<string>('');
+    const [description, setDescription] = useState<string>('')
 
     const setAuth = (isAuth: boolean) => {
         setIsAuth(isAuth)
@@ -58,12 +64,18 @@ export const MainProvider = ({children}: MainProviderType) =>{
         }
     }
 
+    const setTag = (TagName: string) => {
+        setTagName(TagName)
+    }
+
     const setPublishing = (isPublish: boolean) => {
         setIsPublish(isPublish)
         if(!isPublish){
             setPublishText('')
             setCodeText('')
             setPublishImage('')
+            setTagName('')
+            setDescription('')
         }
     }
 
@@ -77,6 +89,10 @@ export const MainProvider = ({children}: MainProviderType) =>{
 
     const setPublishingImage = (image64: string) => {
         setPublishImage(image64)
+    }
+
+    const setPublishDescription = (description: string) => {
+        setDescription(description)
     }
 
     return(
@@ -94,7 +110,11 @@ export const MainProvider = ({children}: MainProviderType) =>{
             codeText,
             setCodeTexting,
             PublishImage,
-            setPublishingImage
+            setPublishingImage,
+            tagName,
+            setTag,
+            description,
+            setPublishDescription
         }}>
             {children}
         </MainContext.Provider>

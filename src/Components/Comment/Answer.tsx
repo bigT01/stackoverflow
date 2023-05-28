@@ -1,7 +1,7 @@
 'use client';
 import Image from "next/image";
 import {UseMainContext} from "@/Context/MainContext";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import TextType from "@/Components/Comment/TextType";
 import CodeType from "@/Components/Comment/CodeType";
 import ImageType from "@/Components/Comment/ImageType";
