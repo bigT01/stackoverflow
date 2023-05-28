@@ -93,7 +93,7 @@ const Post = () => {
                 {/*left side*/}
                 <div className='w-full h-full flex flex-col gap-5'>
                     {/*main problem*/}
-                    <div className='bg-[#11111170] px-6 py-4 overflow-y-scroll overflow-x-hidden h-full' style={{maxHeight: '50%'}}>
+                    <div className='bg-[#11111170] px-6 py-4 overflow-y-scroll overflow-x-hidden h-[500px]'>
                         <h4 className='text-white font-bold 2xl:text-[30px] lg:text-[24px] mb-3'>{post?.title}</h4>
                         <div className='h-[1px] w-full bg-[#353535] mb-3'/>
                         <p className="text-white font-medium 2xl:text-[18px] lg:text-[16px] mb-5">{content ? content[0]?.text : null} </p>
