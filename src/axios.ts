@@ -3,7 +3,7 @@ import axios, {AxiosRequestConfig} from "axios";
 
 
 // @ts-ignore
-const instance = axios.create({baseURL: "https://devhouse-5sts.onrender.com/"})
+const instance = axios.create({baseURL: "https://flawless-empire-387918.lm.r.appspot.com/"})
 
 instance.interceptors.request.use((config) => {
     // @ts-ignore

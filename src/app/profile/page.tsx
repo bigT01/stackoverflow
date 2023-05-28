@@ -1,20 +1,26 @@
 'use client';
 import {useEffect, useState} from "react";
-import PostShort from "@/Components/Posts/PostShort";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {UseMainContext} from "@/Context/MainContext";
+import axios from "@/axios";
 
 const Profile = () => {
     const router = useRouter()
-    const {isAuth} = UseMainContext()
+    const {isAuth, userId} = UseMainContext()
 
     const [isPopular, setIsPopular] = useState<boolean>(true)
     const [information, setInformation] = useState<any>()
+    const [image64, setImage64] = useState<any>('/userPhoto.png')
 
     useEffect(() => {
         if(!isAuth) {
             router.push('/login')
+        }
+        if(isAuth){
+            axios.get(`https://devhouse-5sts.onrender.com/api/users/${userId}`)
+                .then(res => {setInformation(res.data)})
+                .catch(err => {console.log(err)})
         }
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
@@ -24,6 +30,15 @@ const Profile = () => {
             document.body.style.overflow = 'auto';
         };
     }, [])
+
+    useEffect(() => {
+        if(information){
+            if(information?.ava){
+                setImage64('data:image/png;base64,' + information?.ava)
+            }
+        }
+    }, [information])
+
     return(
         <section className=' w-full h-full relative ' >
             {/*header*/}
@@ -31,13 +46,13 @@ const Profile = () => {
                 <div className="mx-auto flex gap-10" style={{maxWidth: '95%'}}>
                     {/*user own info*/}
                     <div className="flex 2xl:gap-10 lg:gap-5 items-center w-2/4">
-                        <img src={`userPhoto.png`} alt="img-userPhoto" className='2xl:w-[297px]  2xl:h-[297px] lg:w-[150px] lg:h-[150px]'/>
+                        <img src={image64} alt="img-userPhoto" className='2xl:w-[297px]  2xl:h-[297px] lg:w-[150px] lg:h-[150px]'/>
                         <div className="flex flex-col 2xl:gap-4 lg:gap-2">
-                            <h1 className="2xl:text-[40px] lg:text-[28px] font-medium">BEIBARYS USSENOV</h1>
-                            <p className="2xl:text-[24px] lg:text-[14px] text-[#FFFFFF50]">SE-2001</p>
+                            <h1 className="2xl:text-[40px] lg:text-[28px] font-medium">{information?.username}</h1>
+                            <p className="2xl:text-[24px] lg:text-[14px] text-[#FFFFFF50]">{information?.groups}</p>
                             <div className="flex gap-5 items-center">
                                 <img src={`rank0.png`} alt="rank0.png" className='2xl:w-[90px]  2xl:h-[90px] lg:w-[54px] lg:h-[54px]'/>
-                                <p className={"2xl:text-[24px] lg:text-[18px] text-white"}>RANK 0</p>
+                                <p className={"2xl:text-[24px] lg:text-[18px] text-white"}>RANK {information?.rank}</p>
                             </div>
                         </div>
                     </div>

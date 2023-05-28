@@ -3,21 +3,24 @@ import {useEffect, useState} from "react";
 import Tags from "@/Components/Tag/Tags";
 import Rating from "@/Components/RatingUsers/Rating";
 import VariantQuestion from "@/Components/VariantsQuestions";
-import PostShort from "@/Components/Posts/PostShort";
 import {UseMainContext} from "@/Context/MainContext";
 import {useRouter} from "next/navigation";
-import axios from "@/axios";
 import ResentQuestions from "@/Components/Posts/ResentQuestions";
+import PostPublishingComponent from "@/Components/PostPublishingComponent/PostPublishingComponent";
+
+
 
 
 export default function Home() {
     const router = useRouter()
-    const {isAuth} = UseMainContext()
+    const {isAuth, setPublishing, isPublish, setAnswer} = UseMainContext()
+    const [QuestionType, setQuestionType] = useState<'RECENT QUESTIONS' | 'TOP QUESTIONS' | 'UNANSWERED' | 'UNACCEPTED'>('RECENT QUESTIONS')
 
     useEffect(() => {
         if (!isAuth) {
             router.push('/login')
         }
+        setAnswer(false)
 
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
@@ -42,10 +45,10 @@ export default function Home() {
                 <div className="w-8/12 h-full">
                     {/*header*/}
                     <div className="grid grid-cols-4 gap-5 w-full mb-5">
-                        <VariantQuestion name={'RECENT QUESTIONS'} isActive={true}/>
-                        <VariantQuestion name={'TOP QUESTIONS'} isActive={false}/>
-                        <VariantQuestion name={'UNANSWERED'} isActive={false}/>
-                        <VariantQuestion name={'UNACCEPTED'} isActive={false}/>
+                        <VariantQuestion name={'RECENT QUESTIONS'} isActive={QuestionType === 'RECENT QUESTIONS'} onClick={() => {setQuestionType('RECENT QUESTIONS')}}/>
+                        <VariantQuestion name={'TOP QUESTIONS'} isActive={QuestionType === 'TOP QUESTIONS'} onClick={() => {setQuestionType('TOP QUESTIONS')}}/>
+                        <VariantQuestion name={'UNANSWERED'} isActive={QuestionType === 'UNANSWERED'} onClick={() => {setQuestionType('UNANSWERED')}}/>
+                        <VariantQuestion name={'UNACCEPTED'} isActive={QuestionType === 'UNACCEPTED'} onClick={() => {setQuestionType('UNACCEPTED')}}/>
                     </div>
                     {/*main section*/}
                     <main className="h-full">
@@ -54,13 +57,13 @@ export default function Home() {
                             <h1 className='font-bold text-[40px]'>RECENT QUESTIONS</h1>
                             <div className="px-4 py-2"
                                  style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}>
-                                <p className="text-white text-[18px] font-medium">ASK QUESTION</p>
+                                <button onClick={() => setPublishing(true)} className="text-white text-[18px] font-medium">ASK QUESTION</button>
                             </div>
                         </div>
                         {/*main*/}
                         <div className=' w-full overflow-y-scroll' style={{height: '65%'}}>
 
-                            <ResentQuestions />
+                            <ResentQuestions questionsType={QuestionType}/>
 
                         </div>
 
@@ -68,6 +71,9 @@ export default function Home() {
                 </div>
 
             </section>
+
+            {isPublish ? (<PostPublishingComponent/>) : null}
+
         </div>
     ) : null
 }

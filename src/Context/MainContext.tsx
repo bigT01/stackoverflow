@@ -1,6 +1,7 @@
 'use client';
 import {createContext, ReactNode, useContext, useState} from "react";
 
+
 type MainProviderType = {
     children: ReactNode
 }
@@ -12,6 +13,14 @@ type MainContextType = {
     userId: string,
     isAnswer: boolean,
     setAnswer: (answer: boolean) => void,
+    isPublish: boolean,
+    setPublishing: (isPublish: boolean) => void,
+    publishText: string,
+    setPublishTexting: (publishText: string) => void,
+    codeText: string,
+    setCodeTexting: (code: any) => void,
+    PublishImage: string,
+    setPublishingImage: (image64: string) => void,
 }
 
 
@@ -23,10 +32,14 @@ export const UseMainContext = () => {
 
 
 export const MainProvider = ({children}: MainProviderType) =>{
-    const [isAuth, setIsAuth] = useState<boolean>(false)
-    const [userId, setUserId] = useState<string>('')
-    const [isAnswer, setIsAnswer] = useState<boolean>(false)
+    const [isAuth, setIsAuth] = useState<boolean>(false);
+    const [userId, setUserId] = useState<string>('');
+    const [isAnswer, setIsAnswer] = useState<boolean>(false);
+    const [isPublish, setIsPublish] = useState<boolean>(false);
 
+    const [publishText, setPublishText] = useState<string>('');
+    const [codeText, setCodeText] = useState<any>('');
+    const [PublishImage, setPublishImage] = useState<string>('')
 
     const setAuth = (isAuth: boolean) => {
         setIsAuth(isAuth)
@@ -38,17 +51,50 @@ export const MainProvider = ({children}: MainProviderType) =>{
 
     const setAnswer = (isAnswer: boolean) => {
         setIsAnswer(isAnswer)
+        if (!isAnswer) {
+            setPublishText('')
+            setCodeText('')
+            setPublishImage('')
+        }
     }
 
+    const setPublishing = (isPublish: boolean) => {
+        setIsPublish(isPublish)
+        if(!isPublish){
+            setPublishText('')
+            setCodeText('')
+            setPublishImage('')
+        }
+    }
+
+    const setPublishTexting = (publishText: string) => {
+        setPublishText(publishText)
+    }
+
+    const setCodeTexting = (code: any) => {
+        setCodeText(code)
+    }
+
+    const setPublishingImage = (image64: string) => {
+        setPublishImage(image64)
+    }
 
     return(
         <MainContext.Provider value={{
-            setAuth,
             isAuth,
+            setAuth,
             userId,
             setUser,
             isAnswer,
-            setAnswer
+            setAnswer,
+            isPublish,
+            setPublishing,
+            publishText,
+            setPublishTexting,
+            codeText,
+            setCodeTexting,
+            PublishImage,
+            setPublishingImage
         }}>
             {children}
         </MainContext.Provider>

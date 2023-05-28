@@ -16,8 +16,10 @@ const Post = () => {
     const [post, setPost] = useState<any>()
     const [content, setContent] = useState<any>()
     const [image64, setImage64] = useState<any>('/defaultQuestion.png')
-    const [createdAt, setCreatedAt] = useState<any>('')
+    const [createdAt, setCreatedAt] = useState<string>('')
     const [userAva64, setUserAva64] = useState('')
+    const [TagCode, setTagCode] = useState('python')
+    const [code, setCode] = useState('#code code code')
 
     useEffect(() => {
         if (!isAuth) {
@@ -35,18 +37,19 @@ const Post = () => {
 
     // get main data of post
     useEffect(() => {
-        if(isAuth){
+        // if(isAuth){
             const id =(pathname.split('/')[2])
             axios.get(`api/posts/${id}`)
                 .then(res => setPost(res.data))
                 .catch(err => console.log(err))
-        }
+        // }
     }, [pathname])
 
     useEffect(() => {
         if(post){
-            setContent(JSON.parse(post?.content))
-
+            if(post?.content){
+                setContent(JSON.parse(post?.content))
+            }
             // formatting date to in design
             const dateString = "2023-05-22T14:18:36.043+00:00";
             const date = new Date(dateString);
@@ -56,6 +59,8 @@ const Post = () => {
 
             const formattedDate = `${day}.${month}.${year}`;
             setCreatedAt(formattedDate)
+
+            // post?.tag?.name && setTagCode(post?.tag?.name)
 
             // author information finding
             axios.get(`api/users/${post?.authorId}`)
@@ -68,7 +73,10 @@ const Post = () => {
     useEffect(() => {
         if(content){
             setImage64('data:image/png;base64,' + content[3]?.image)
+            content[2]?.code && setCode(content[2]?.code)
+
         }
+        console.log(post)
     }, [content])
 
     // formatting user photo from base64
@@ -109,9 +117,9 @@ const Post = () => {
                     </div>
                     {/*code*/}
                     <div className='w-full overflow-x-scroll overflow-y-scroll' style={{maxHeight: '25%'}}>
-                        {post?.tag?.name && content && <CopyBlock
-                            text={content[1]?.code}
-                            language={post?.tag?.name}
+                        {post?.tag?.name && <CopyBlock
+                            text={code}
+                            language={TagCode}
                             showLineNumbers='true'
                             codeBlock
                             wrapLines

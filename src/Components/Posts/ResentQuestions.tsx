@@ -2,20 +2,37 @@
 import {UseMainContext} from "@/Context/MainContext";
 import {useEffect, useState} from "react";
 import axios from "@/axios";
-import Image from "next/image";
 import PostShort from "@/Components/Posts/PostShort";
 
-const ResentQuestions = () => {
+type ResentQuestionsProps = {
+    questionsType: 'RECENT QUESTIONS' | 'TOP QUESTIONS' | 'UNANSWERED' | 'UNACCEPTED'
+}
+
+const ResentQuestions = ({questionsType}: ResentQuestionsProps) => {
     const [posts, setPosts] = useState<any>()
+
     const {isAuth} = UseMainContext()
 
     useEffect(() => {
         if (isAuth) {
-            axios.get('api/posts/allPosts')
+            let path = 'recent'
+            if(questionsType === 'RECENT QUESTIONS'){
+                path = "recent"
+            }
+            if(questionsType === 'TOP QUESTIONS'){
+                path = "top"
+            }
+            if(questionsType === 'UNANSWERED'){
+                path = "unanswered"
+            }
+            if(questionsType === 'UNACCEPTED'){
+                path = "unaccepted"
+            }
+            axios.get(`api/posts/${path}`)
                 .then(res => setPosts(res.data))
                 .catch(err => console.log(err))
         }
-    }, [])
+    }, [questionsType])
 
     return (
         <div className=" grid gap-x-6 h-full w-full gap-y-12 2xl:grid-cols-2 lg:grid-cols-1">

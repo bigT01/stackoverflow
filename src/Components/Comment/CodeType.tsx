@@ -3,15 +3,15 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
-import {useEffect, useState} from "react";
+import {UseMainContext} from "@/Context/MainContext";
 
 
 
 const CodeType = () => {
-    const [textValue, setTextValue] = useState<string>();
+    const {codeText, setCodeTexting} = UseMainContext()
 
     function onChange(newValue: any) {
-        setTextValue(newValue);
+        setCodeTexting(newValue);
     }
 
     return(
@@ -24,6 +24,7 @@ const CodeType = () => {
                 name="UNIQUE_ID_OF_DIV"
                 width="100%"
                 height="250px"
+                value={codeText}
             />
             <button className="px-4 py-2 h-fit absolute bottom-0 right-0"
                     style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}>

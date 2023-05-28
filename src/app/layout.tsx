@@ -1,9 +1,9 @@
 import './globals.scss'
-import Link from "next/link";
 import Navbar from "@/Components/Navbar/Navbar";
 import Footer from "@/Components/Footer/Footer";
 import {MainProvider} from "@/Context/MainContext";
 import ClientLayout from "@/Components/clientLayout/clientLayout";
+
 
 
 
