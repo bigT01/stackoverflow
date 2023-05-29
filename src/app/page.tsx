@@ -65,6 +65,7 @@ export default function Home() {
 
                             <ResentQuestions questionsType={QuestionType}/>
 
+
                         </div>
 
                     </main>

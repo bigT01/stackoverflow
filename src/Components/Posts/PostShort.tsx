@@ -25,10 +25,10 @@ const PostShort = ({id, content, status, answers, tags, title}:PostShort) => {
 
     return(
         <Link href={`post/${id}`}>
-            <div className="flex gap-3">
-                <img src={image64} alt={`${id}-img`} width={160}
+            <div className="flex gap-4">
+                <img src={image64} alt={`${id}-img`} className="object-cover" style={{height: 92}} width={160}
                        height={92}/>
-                <div>
+                <div className="flex flex-col justify-between">
                     <h4 className="text-[22px] font-bold">{title}</h4>
                     <div className="flex justify-between gap-2">
                         {/*Tags*/}

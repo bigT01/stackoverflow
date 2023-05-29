@@ -40,15 +40,14 @@ const PostPublishingComponent = () => {
 
     const handlePublish = () => {
         if (codeText && publishText && PublishImage) {
-            const content = [{text: publishText}, {code: codeText}, {image: PublishImage}]
+            const content = [{text: description}, {code: codeText}, {image: PublishImage}]
             axios.post('api/posts/createPost', {
                 title: publishText,
                 content: content,
-                tagName: 'python',
+                tagName: tagName,
                 authorId: userId
             })
                 .then(res => {
-                    console.log(res)
                     setPublishing(false)
                 })
                 .catch(err => console.log(err))

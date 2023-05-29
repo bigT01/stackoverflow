@@ -5,16 +5,33 @@ import {usePathname, useRouter} from "next/navigation";
 import {UseMainContext} from "@/Context/MainContext";
 import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
+import RatingImage from "@/Components/RatingImage";
 
 
 const Navbar = () => {
     const pathName = usePathname()
     const router = useRouter()
 
-    const { isAuth, setAuth, setUser } = UseMainContext()
+    const { isAuth, setAuth, setUser, userRank } = UseMainContext()
     const popupRef = useRef(null);
 
     const [isProfile, setIsProfile] = useState<boolean>(false)
+
+    const [percentRating, setPercentRating] = useState<number>(0)
+
+    useEffect(() => {
+        if(userRank > 10){
+            const NeonRank = userRank - 10
+            setPercentRating((NeonRank * 340) / 15)
+        }
+        if(userRank <= 10 && userRank > 5){
+            const goldRank = userRank - 5
+            setPercentRating((goldRank * 340) / 5)
+        }
+        if(userRank <= 5 ){
+            setPercentRating((userRank * 340) / 5)
+        }
+    }, [userRank])
 
 
     useEffect(() => {
@@ -58,12 +75,12 @@ const Navbar = () => {
 
                     <div className='px-2 py-2 bg-black relative mr-10 w-[340px]'>
                         <div className="relative z-10 flex items-center gap-2">
-                            <Image src='/rank0.png' alt='img-rank0' width={34} height={34}/>
-                            <p>RANK 0</p>
+                            <RatingImage votes={userRank} width={34} height={34}/>
+                            <p>{userRank} POINTS</p>
                         </div>
 
-                        <div className="absolute top-0 left-0 z-0 w-[70%] h-full"
-                             style={{background: 'linear-gradient(88.76deg, rgba(3, 247, 253, 0.4) 0.58%, rgba(125, 35, 203, 0.4) 98.96%)'}}/>
+                        <div className={`absolute top-0 left-0 z-0 h-full`}
+                             style={{width: `${percentRating}%`, background: 'linear-gradient(88.76deg, rgba(3, 247, 253, 0.4) 0.58%, rgba(125, 35, 203, 0.4) 98.96%)'}}/>
                     </div>
 
                     <svg width="20" height="27" viewBox="0 0 20 27" fill="none" xmlns="http://www.w3.org/2000/svg"

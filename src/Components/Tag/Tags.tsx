@@ -20,7 +20,7 @@ const Tags = () => {
     return(
         <div className="p-6 flex flex-wrap bg-[#11111170] w-full gap-4">
 
-            {tags ? tags.map((tagsItem: any, index: number) => (<Tag key={index} name={'java'}/>)): null}
+            {tags ? tags.map((tagsItem: any) => (<Tag key={tagsItem?.tagId} name={tagsItem?.name}/>)): null}
 
         </div>
     )

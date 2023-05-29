@@ -1,4 +1,5 @@
 import Image from "next/image";
+import RatingImage from "@/Components/RatingImage";
 
 type RatingUserProps = {
     rating: number,
@@ -16,7 +17,8 @@ const RatingUser = ({rating, imgURL, nick, votes, ratingIMGURL}:RatingUserProps)
                                                      width={42} height={42} className='mr-3'/>
                 <span>{nick}</span></td>
             <td>{votes}</td>
-            <td><Image src={ratingIMGURL} alt={`${ratingIMGURL}-img`} width={40} height={40} className='m-0'/>
+            <td>
+                <RatingImage votes={votes} width={40} height={40} className='m-0'/>
             </td>
         </tr>
     )

@@ -35,11 +35,12 @@ const ResentQuestions = ({questionsType}: ResentQuestionsProps) => {
     }, [questionsType])
 
     return (
-        <div className=" grid gap-x-6 h-full w-full gap-y-12 2xl:grid-cols-2 lg:grid-cols-1">
+        <div className=" grid gap-x-6 h-full w-full gap-y-12 2xl:grid-cols-2 lg:grid-cols-1" style={{gridAutoRows: 95}}>
             {posts ? posts.map((postItem:any) => (
                 <PostShort key={postItem?.postId} id={postItem?.postId} title={postItem.title}
                            content={postItem?.content} tags={postItem?.tag?.name} answers={postItem?.numberOfAnsers}
                            status={postItem?.status}/>)) : null}
+            <div className="mb-20"/>
         </div>
     )
 }

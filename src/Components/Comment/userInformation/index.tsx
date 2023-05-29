@@ -1,9 +1,9 @@
 'use client';
-import Image from "next/image";
 import DateFormation from "@/Components/Comment/dateFormation";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "@/axios";
 import {UseMainContext} from "@/Context/MainContext";
+import RatingImage from "@/Components/RatingImage";
 
 type UserInformationProps = {
     author: any,
@@ -46,8 +46,8 @@ const UserInformation = ({author, createdAt, status, postAuthorId, answerId, pos
                         <h4 className="text-white font-bold 2xl:text-[20px] lg:text-[16px]">{author?.username}</h4>
 
                         <div className="flex gap-2 items-center">
-                            <Image src='/rank0.png' alt='img-rank0' width={32} height={32}/>
-                            <p className="text-white 2xl:text-[16px] lg:text-[14px]">RANK {author?.rank}</p>
+                            <RatingImage votes={author?.rank} width={32} height={32}/>
+                            <p className="text-white 2xl:text-[16px] lg:text-[14px]">{author?.rank} POINTS</p>
                         </div>
                     </div>
                     {<DateFormation createdAt={createdAt}/>}

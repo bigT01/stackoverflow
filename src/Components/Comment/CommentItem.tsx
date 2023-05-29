@@ -20,14 +20,17 @@ type CommentItemProps = {
     postStatus: string
 }
 
-const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, title, postAuthorId, postStatus}: CommentItemProps) => {
+const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, title, postAuthorId, postStatus, postTag}: CommentItemProps) => {
     const {userId} = UseMainContext()
     const [image64, setImage64] = useState<string>('')
     const [titleText, setTitleText] = useState<string>('')
     const [code, setCode] = useState<string>('')
+
+    const [commentsData, setCommentsData] = useState<any>(null)
     const [moreCommentLen, setMoreCommentLen] = useState<number>(0)
     const [isComment, setIsComment] = useState<boolean>(false)
-
+    const [commentText, setCommentText] = useState<string>('')
+    const [isHandleCommentPost, setIsHandleCommentPost] = useState<boolean>(false)
 
     useEffect(() => {
         if (content) {
@@ -36,8 +39,11 @@ const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, ti
             setCode(contentParse[1]?.code)
             setImage64(contentParse[2]?.image)
         }
-        axios.get(`/api/comments/commentByAnswer/${id}`)
-            .then(res => {console.log(res)})
+        axios.get(`/api/comments/${id}`)
+            .then(res => {
+                setMoreCommentLen(res.data.length)
+                setCommentsData(res.data)
+            })
             .catch(err => {console.log(err)})
     }, [])
 
@@ -65,6 +71,31 @@ const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, ti
             })
     }
 
+    const handleComment = () => {
+        axios.post('api/comments/createComment', {
+            userId: userId,
+            answerId: id,
+            comment: commentText
+        })
+            .then(res => {
+                setIsHandleCommentPost(true)
+                setCommentText('')
+            })
+            .catch(err => {console.log(err)})
+    }
+
+    useEffect(() => {
+        if(isHandleCommentPost){
+            axios.get(`/api/comments/${id}`)
+                .then(res => {
+                    setMoreCommentLen(res.data.length)
+                    setCommentsData(res.data)
+                    setIsHandleCommentPost(false)
+                })
+                .catch(err => {console.log(err)})
+        }
+    }, [isHandleCommentPost])
+
     return (
         <div className="w-full flex flex-col gap-2">
             {/*user information*/}
@@ -75,7 +106,7 @@ const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, ti
             {titleText && <p className="text-white 2xl:text-[18px] lg:text-[16px]">{titleText}</p>}
             {code && (<CopyBlock
                 text={code}
-                language={'python'}
+                language={postTag}
                 showLineNumbers='true'
                 codeBlock
                 wrapLines
@@ -118,19 +149,19 @@ const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, ti
             </div>
             {isComment && (
                 <div className="flex flex-col gap-3 ml-5">
-                    <div className="flex flex-col gap-1 bg-[#33333320]">
-                        <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF70]">dias</p>
-                        <p className="2xl:text-[24px] lg:text-[18px] text-[#FFFFFF]">hello world</p>
-                    </div>
+                    {commentsData ?
+                        commentsData.map(commentsItem => (
+                            <div className="flex flex-col gap-1 bg-[#33333320]" key={commentsItem?.commentId}>
+                                <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF70]">{commentsItem?.author?.username}</p>
+                                <p className="2xl:text-[24px] lg:text-[18px] text-[#FFFFFF]">{commentsItem?.comment}</p>
+                            </div>
+                        )) :
+                    null}
 
-                    <div className="flex flex-col gap-1 bg-[#33333320]">
-                        <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF70]">dias</p>
-                        <p className="2xl:text-[24px] lg:text-[18px] text-[#FFFFFF]">hello world</p>
-                    </div>
+                    <input type="text" className={"text-white 2xl:text-[24px] lg:text-[18px] w-full p-2 bg-black placeholder:text-gray-400"} placeholder="your comment" value={commentText} onChange={(e) => setCommentText(e.target.value)}/>
 
-                    <input type="text" className={"text-white 2xl:text-[24px] lg:text-[18px] w-full p-2 bg-black placeholder:text-gray-400"} placeholder="your comment"/>
                     <button className="px-4 py-2 h-fit"
-                            style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}>
+                            style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}} onClick={() => handleComment()}>
                         <p className="text-white 2xl:text-[16px] lg:text-[14px] font-medium">Comment</p>
                     </button>
                 </div>

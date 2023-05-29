@@ -25,6 +25,8 @@ type MainContextType = {
     setTag: (TagName: string) => void,
     description: string,
     setPublishDescription: (Description: string) => void,
+    userRank: number,
+    setRankUser:(rank: number) => void,
 }
 
 
@@ -38,6 +40,7 @@ export const UseMainContext = () => {
 export const MainProvider = ({children}: MainProviderType) =>{
     const [isAuth, setIsAuth] = useState<boolean>(false);
     const [userId, setUserId] = useState<string>('');
+    const [userRank, setUserRank] = useState<number>(0)
     const [isAnswer, setIsAnswer] = useState<boolean>(false);
     const [isPublish, setIsPublish] = useState<boolean>(false);
 
@@ -95,6 +98,10 @@ export const MainProvider = ({children}: MainProviderType) =>{
         setDescription(description)
     }
 
+    const setRankUser = (rank: number) => {
+        setUserRank(rank)
+    }
+
     return(
         <MainContext.Provider value={{
             isAuth,
@@ -114,7 +121,9 @@ export const MainProvider = ({children}: MainProviderType) =>{
             tagName,
             setTag,
             description,
-            setPublishDescription
+            setPublishDescription,
+            userRank,
+            setRankUser
         }}>
             {children}
         </MainContext.Provider>

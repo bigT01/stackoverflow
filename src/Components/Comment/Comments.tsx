@@ -6,9 +6,10 @@ import CommentItem from "@/Components/Comment/CommentItem";
 
 type CommentsProps = {
     authorId: string,
-    postStatus: string
+    postStatus: string,
+    postTag: string
 }
-const Comments = ({authorId, postStatus} : CommentsProps) => {
+const Comments = ({authorId, postStatus, postTag} : CommentsProps) => {
     const pathname = usePathname()
     const [commentData, setCommentData] = useState<any>(null)
 
@@ -20,9 +21,9 @@ const Comments = ({authorId, postStatus} : CommentsProps) => {
     },[])
 
     return(
-        <div className="px-6 py-4 bg-[#11111170] flex flex-col gap-5 w-full h-full overflow-y-scroll max-h-[600px]">
+        <div className="px-6 py-4 bg-[#11111170] flex flex-col gap-5 w-full h-full overflow-y-scroll 2xl:max-h-[600px] lg:max-h-[500px]">
             {/*comment*/}
-            {commentData ? commentData.map((item: any) => (<CommentItem key={item.id} id={item?.id} title={item?.title} votes={item?.votes} content={item?.content} status={item?.status} createdAt={item?.createdAt} votedBy={item?.votedBy} author={item?.author} postAuthorId={authorId} postStatus={postStatus}/>)): null}
+            {commentData ? commentData.map((item: any) => (<CommentItem key={item.id} id={item?.id} title={item?.title} votes={item?.votes} content={item?.content} status={item?.status} createdAt={item?.createdAt} votedBy={item?.votedBy} author={item?.author} postAuthorId={authorId} postStatus={postStatus} postTag={postTag}/>)): null}
 
 
         </div>

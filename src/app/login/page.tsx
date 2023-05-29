@@ -7,7 +7,7 @@ import {UseMainContext} from "@/Context/MainContext";
 
 const Login = () => {
     const router = useRouter()
-    const {isAuth, setAuth, setUser} = UseMainContext()
+    const {isAuth, setAuth, setUser, setRankUser} = UseMainContext()
 
     const [isSignIn, setIsSignIn] = useState(true)
 
@@ -82,6 +82,7 @@ const Login = () => {
                     if(res.data){
                         setAuth(true)
                         setUser(res.data?.userId)
+                        setRankUser(res.data?.rank)
                         router.push('/')
                     }
                 })

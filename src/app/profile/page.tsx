@@ -4,21 +4,22 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {UseMainContext} from "@/Context/MainContext";
 import axios from "@/axios";
+import RatingImage from "@/Components/RatingImage";
 
 const Profile = () => {
     const router = useRouter()
-    const {isAuth, userId} = UseMainContext()
+    const {isAuth, userId, userRank} = UseMainContext()
 
     const [isPopular, setIsPopular] = useState<boolean>(true)
     const [information, setInformation] = useState<any>()
-    const [image64, setImage64] = useState<any>('/userPhoto.png')
+    const [image64, setImage64] = useState<any>('/avatarka.png')
 
     useEffect(() => {
         if(!isAuth) {
             router.push('/login')
         }
         if(isAuth){
-            axios.get(`https://devhouse-5sts.onrender.com/api/users/${userId}`)
+            axios.get(`api/users/${userId}`)
                 .then(res => {setInformation(res.data)})
                 .catch(err => {console.log(err)})
         }
@@ -51,8 +52,8 @@ const Profile = () => {
                             <h1 className="2xl:text-[40px] lg:text-[28px] font-medium">{information?.username}</h1>
                             <p className="2xl:text-[24px] lg:text-[14px] text-[#FFFFFF50]">{information?.groups}</p>
                             <div className="flex gap-5 items-center">
-                                <img src={`rank0.png`} alt="rank0.png" className='2xl:w-[90px]  2xl:h-[90px] lg:w-[54px] lg:h-[54px]'/>
-                                <p className={"2xl:text-[24px] lg:text-[18px] text-white"}>RANK {information?.rank}</p>
+                                <RatingImage votes={userRank} width={90} height={90} className='2xl:w-[90px]  2xl:h-[90px] lg:w-[54px] lg:h-[54px]'/>
+                                <p className={"2xl:text-[24px] lg:text-[18px] text-white"}>{userRank} POINTS</p>
                             </div>
                         </div>
                     </div>

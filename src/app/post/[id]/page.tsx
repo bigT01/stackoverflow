@@ -93,24 +93,26 @@ const Post = () => {
                 {/*left side*/}
                 <div className='w-full h-full flex flex-col gap-5'>
                     {/*main problem*/}
-                    <div className='bg-[#11111170] px-6 py-4 overflow-y-scroll overflow-x-hidden h-[500px]'>
+                    <div className='bg-[#11111170] px-6 py-4 overflow-y-scroll overflow-x-hidden 2xl:h-[500px] lg:h-[400px]'>
                         <h4 className='text-white font-bold 2xl:text-[30px] lg:text-[24px] mb-3'>{post?.title}</h4>
                         <div className='h-[1px] w-full bg-[#353535] mb-3'/>
-                        <p className="text-white font-medium 2xl:text-[18px] lg:text-[16px] mb-5">{content ? content[0]?.text : null} </p>
-                        <div className="flex justify-between items-end">
-                            <img src={image64} alt={`defaultQuestion-img`} height={315} width={460}/>
-                            <div className="flex flex-col gap-5">
-                                <div className="py-2 flex-shrink-0 2xl:text-[24px] lg:text-[18px] px-6 bg-[#33333350] w-fit">{post?.tag?.name}</div>
+                        <div className="flex flex-col justify-between">
+                            <p className="text-white font-medium 2xl:text-[18px] lg:text-[16px] mb-5">{content ? content[0]?.text : null} </p>
+                            <div className="flex justify-between items-end">
+                                <img src={image64} alt={`defaultQuestion-img`}  className={"2xl:h-[315px] 2xl:w-[550px] lg:h-[200px] lg:w-[370px] object-cover "}/>
+                                <div className="flex flex-col 2xl:gap-5 lg:gap-3">
+                                    <div className="py-2 flex-shrink-0 2xl:text-[24px] lg:text-[18px] px-6 bg-[#33333350] w-fit">{post?.tag?.name}</div>
 
-                                {userInfo && <div className="flex gap-2 items-center">
-                                    {userInfo?.ava ? <img src={userAva64} alt={`${userInfo?.username}-img`} width={41} height={41}
-                                                            style={{width: 45, height: 45}}/> : <Image src={`/userPhoto.png`} alt={`user-img`} width={41} height={41}
-                                                              style={{width: 45, height: 45}}/>}
-                                    <div className="flex flex-col gap-1 w-full">
-                                        <p className="text-white font-medium 2xl:text-[18px] lg:text-[16px]">{userInfo?.username}</p>
-                                        <p className="text-[#FFFFFF50] font-regular 2xl:text-[16px] lg:text-[14px]">{createdAt}</p>
-                                    </div>
-                                </div>}
+                                    {userInfo && <div className="flex gap-2 items-center">
+                                        {userInfo?.ava ? <img src={userAva64} alt={`${userInfo?.username}-img`} width={41} height={41}
+                                                              style={{width: 45, height: 45}}/> : <Image src={`/userPhoto.png`} alt={`user-img`} width={41} height={41}
+                                                                                                         style={{width: 45, height: 45}}/>}
+                                        <div className="flex flex-col gap-1 w-full">
+                                            <p className="text-white font-medium 2xl:text-[18px] lg:text-[16px]">{userInfo?.username}</p>
+                                            <p className="text-[#FFFFFF50] font-regular 2xl:text-[16px] lg:text-[14px]">{createdAt}</p>
+                                        </div>
+                                    </div>}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,7 +133,7 @@ const Post = () => {
                     {/*header*/}
                     <Answer />
                     {/*comment*/}
-                    {!isAnswer && (<Comments authorId={post?.authorId} postStatus={post?.status}/>)}
+                    {!isAnswer && (<Comments authorId={post?.authorId} postStatus={post?.status} postTag={post?.tag?.name}/>)}
                 </div>
             </section>
         </div>
