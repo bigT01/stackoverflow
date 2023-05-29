@@ -131,7 +131,7 @@ const Post = () => {
                     {/*header*/}
                     <Answer />
                     {/*comment*/}
-                    {!isAnswer && (<Comments/>)}
+                    {!isAnswer && (<Comments authorId={post?.authorId} postStatus={post?.status}/>)}
                 </div>
             </section>
         </div>

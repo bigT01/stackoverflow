@@ -8,7 +8,7 @@ const AnswerButton = () => {
 
     const handleAnswer = () => {
         if (codeText && publishText && PublishImage) {
-            const content = [{image: PublishImage}, {text: publishText}, {code: codeText}, {image: PublishImage}]
+            const content = [{text: publishText}, {code: codeText}, {image: PublishImage}]
             const id = Number(pathname.split('/')[2])
             axios.post('api/answers/createAnswer', {
                 title: publishText,

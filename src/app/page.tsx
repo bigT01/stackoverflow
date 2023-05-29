@@ -54,7 +54,7 @@ export default function Home() {
                     <main className="h-full">
                         {/*header*/}
                         <div className="flex justify-between items-center mb-4">
-                            <h1 className='font-bold text-[40px]'>RECENT QUESTIONS</h1>
+                            <h1 className='font-bold text-[40px]'>{QuestionType}</h1>
                             <div className="px-4 py-2"
                                  style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}>
                                 <button onClick={() => setPublishing(true)} className="text-white text-[18px] font-medium">ASK QUESTION</button>
