@@ -6,6 +6,7 @@ type RatingImageProps = {
     votes: number,
     width: number,
     height: number
+    [key: string]: any;
 }
 
 const RatingImage = ({votes ,width, height, ...rest}: RatingImageProps) => {

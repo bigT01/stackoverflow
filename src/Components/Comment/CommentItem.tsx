@@ -17,7 +17,8 @@ type CommentItemProps = {
     votedBy: any,
     author: any,
     postAuthorId: string,
-    postStatus: string
+    postStatus: string,
+    postTag: string
 }
 
 const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, title, postAuthorId, postStatus, postTag}: CommentItemProps) => {
@@ -150,7 +151,7 @@ const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, ti
             {isComment && (
                 <div className="flex flex-col gap-3 ml-5">
                     {commentsData ?
-                        commentsData.map(commentsItem => (
+                        commentsData.map((commentsItem: any) => (
                             <div className="flex flex-col gap-1 bg-[#33333320]" key={commentsItem?.commentId}>
                                 <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF70]">{commentsItem?.author?.username}</p>
                                 <p className="2xl:text-[24px] lg:text-[18px] text-[#FFFFFF]">{commentsItem?.comment}</p>
