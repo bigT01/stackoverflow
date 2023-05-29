@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {UseMainContext} from "@/Context/MainContext";
 import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
@@ -9,7 +9,9 @@ import Link from "next/link";
 
 const Navbar = () => {
     const pathName = usePathname()
-    const { isAuth } = UseMainContext()
+    const router = useRouter()
+
+    const { isAuth, setAuth, setUser } = UseMainContext()
     const popupRef = useRef(null);
 
     const [isProfile, setIsProfile] = useState<boolean>(false)
@@ -29,6 +31,12 @@ const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [popupRef]);
+
+    const HandleLogOut = () => {
+        setAuth(false)
+        setUser('')
+        router.push('/login')
+    }
 
     return isAuth && pathName !== '/login' ? (
         <nav className='w-full bg-[#11111170] h-[65px] flex items-center mb-4'>
@@ -74,7 +82,7 @@ const Navbar = () => {
                             <Link href='/profile' className="2xl:text-[18px] lg:text-[16px] text-white">Profile page</Link>
                             <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Saved questions</Link>
                             <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Settings</Link>
-                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Log out</Link>
+                            <button className="2xl:text-[18px] lg:text-[16px] text-white" onClick={() => HandleLogOut()}>Log out</button>
                         </div>}
                     </div>
                 </div>

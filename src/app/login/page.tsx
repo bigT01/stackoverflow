@@ -73,19 +73,42 @@ const Login = () => {
     const handleSubmit = (e:FormEvent) => {
         e.preventDefault()
 
-
-        axios.post('/api/login', {
-            username: nickname,
-            password,
-        })
-            .then((res) => {
-                if(res.data){
-                    setAuth(true)
-                    setUser(res.data?.userId)
-                    router.push('/')
-                }
+        if(isSignIn){
+            axios.post('api/login', {
+                username: nickname,
+                password,
             })
-            .catch(err => console.log(err))
+                .then((res) => {
+                    if(res.data){
+                        setAuth(true)
+                        setUser(res.data?.userId)
+                        router.push('/')
+                    }
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            if(password === confirmPassword) {
+                axios.post('api/register', {
+                    email: email,
+                    username: nickname,
+                    password,
+                })
+                    .then((res) => {
+                        // if(res.data){
+                        //     setAuth(true)
+                        //     setUser(res.data?.userId)
+                        //     router.push('/')
+                        // }
+                        console.log(res)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        setIsSignIn(true)
+                    })
+            }
+        }
+
     }
 
     return(

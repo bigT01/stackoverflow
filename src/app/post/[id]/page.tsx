@@ -60,7 +60,7 @@ const Post = () => {
             const formattedDate = `${day}.${month}.${year}`;
             setCreatedAt(formattedDate)
 
-            // post?.tag?.name && setTagCode(post?.tag?.name)
+            post?.tag?.name && setTagCode(post?.tag?.name)
 
             // author information finding
             axios.get(`api/users/${post?.authorId}`)
