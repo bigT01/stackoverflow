@@ -19,7 +19,7 @@ const AnswerUserInfo = () => {
     return(
         <div className="flex gap-4 items-center">
             {/*user image*/}
-            {userData?.ava ? <img src={userData?.ava} alt={`user-img`} width={71} height={71}/> :<img src={`/userPhoto.png`} alt={`user-img`} width={71} height={71}/>}
+            {userData?.ava ? <img src={userData?.ava} alt={`user-img`} className="rounded-full" width={71} height={71}/> :<img src={`/userPhoto.png`} alt={`user-img`} width={71} height={71}/>}
             {/*user information*/}
             <div className="flex flex-col gap-1">
                 <h4 className="text-white font-bold 2xl:text-[24px] lg:text-[18px]">{userData?.username}</h4>

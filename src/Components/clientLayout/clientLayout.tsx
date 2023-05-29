@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import {useEffect} from "react";
+import {UseMainContext} from "@/Context/MainContext";
+import Settings from "@/Components/Settings";
 
 const ClientLayout = ({children,}: { children: React.ReactNode }) => {
-
+    const {isAuth, isSettings} = UseMainContext()
     useEffect(() => {
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
@@ -33,6 +35,7 @@ const ClientLayout = ({children,}: { children: React.ReactNode }) => {
                 background: 'radial-gradient(50% 50% at 50% 50%, rgba(112, 119, 229, 0.5) 0%, rgba(112, 119, 229, 0) 100%)',
                 transform: 'translate(-20%, 30%)'
             }}/>
+            {isAuth && isSettings && (<Settings/>)}
         </div>
     )
 }

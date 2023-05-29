@@ -82,7 +82,7 @@ const Post = () => {
     useEffect(() => {
         if(userInfo){
             if(userInfo?.ava) {
-                setUserAva64('data:image/png;base64,' + userInfo?.ava)
+                setUserAva64(userInfo?.ava)
             }
         }
     }, [userInfo])
@@ -104,7 +104,7 @@ const Post = () => {
                                     <div className="py-2 flex-shrink-0 2xl:text-[24px] lg:text-[18px] px-6 bg-[#33333350] w-fit">{post?.tag?.name}</div>
 
                                     {userInfo && <div className="flex gap-2 items-center">
-                                        {userInfo?.ava ? <img src={userAva64} alt={`${userInfo?.username}-img`} width={41} height={41}
+                                        {userInfo?.ava ? <img src={userAva64} alt={`${userInfo?.username}-img`} className="rounded-full" width={41} height={41}
                                                               style={{width: 45, height: 45}}/> : <Image src={`/userPhoto.png`} alt={`user-img`} width={41} height={41}
                                                                                                          style={{width: 45, height: 45}}/>}
                                         <div className="flex flex-col gap-1 w-full">

@@ -6,18 +6,28 @@ import {UseMainContext} from "@/Context/MainContext";
 import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import RatingImage from "@/Components/RatingImage";
+import axios from "@/axios";
 
 
 const Navbar = () => {
     const pathName = usePathname()
     const router = useRouter()
-
-    const { isAuth, setAuth, setUser, userRank } = UseMainContext()
+    const { isAuth, setAuth, setUser, userRank, setSettings, isUpUserInfo, userId, setUpUserInfo } = UseMainContext()
     const popupRef = useRef(null);
 
     const [isProfile, setIsProfile] = useState<boolean>(false)
+    const [userImage, setUserImage] = useState<string>('')
 
     const [percentRating, setPercentRating] = useState<number>(0)
+
+    useEffect(() => {
+        axios.get(`api/users/${userId}`)
+            .then((res) => {
+                setUserImage(res?.data?.ava)
+                setUpUserInfo(false)
+            })
+            .catch(err => console.log(err))
+    } ,[])
 
     useEffect(() => {
         if(userRank > 10){
@@ -33,7 +43,6 @@ const Navbar = () => {
         }
     }, [userRank])
 
-
     useEffect(() => {
         function handleClickOutside(event:any) {
             // @ts-ignore
@@ -48,6 +57,17 @@ const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [popupRef]);
+
+    useEffect(() => {
+        if(isUpUserInfo){
+            axios.get(`api/users/${userId}`)
+                .then((res) => {
+                    setUserImage(res?.data?.ava)
+                    setUpUserInfo(false)
+                })
+                .catch(err => console.log(err))
+        }
+    }, [isUpUserInfo])
 
     const HandleLogOut = () => {
         setAuth(false)
@@ -92,13 +112,13 @@ const Navbar = () => {
 
                     <div className='relative'>
                         <button onClick={() => setIsProfile(old => !old)} >
-                            <Image src='/profile.png' alt='img-profile' width={45} height={45}/>
+                            {userImage? <img src={userImage} alt='img-profile' className="rounded-full" width={45} height={45}/> : <img src='/profile.png' alt='img-profile' className="rounded-full" width={45} height={45}/>}
                         </button>
 
                         {isProfile && <div className="absolute right-0 top-[100%] 2xl:w-[250px] lg:w-[200px] py-6 px-2 bg-black text-white z-20 flex flex-col items-end gap-2" ref={popupRef}>
                             <Link href='/profile' className="2xl:text-[18px] lg:text-[16px] text-white">Profile page</Link>
                             <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Saved questions</Link>
-                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Settings</Link>
+                            <button className="2xl:text-[18px] lg:text-[16px] text-white" onClick={() => setSettings(true)}>Settings</button>
                             <button className="2xl:text-[18px] lg:text-[16px] text-white" onClick={() => HandleLogOut()}>Log out</button>
                         </div>}
                     </div>

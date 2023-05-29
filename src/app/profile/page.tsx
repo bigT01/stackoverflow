@@ -35,7 +35,7 @@ const Profile = () => {
     useEffect(() => {
         if(information){
             if(information?.ava){
-                setImage64('data:image/png;base64,' + information?.ava)
+                setImage64(information?.ava)
             }
         }
     }, [information])
@@ -47,7 +47,7 @@ const Profile = () => {
                 <div className="mx-auto flex gap-10" style={{maxWidth: '95%'}}>
                     {/*user own info*/}
                     <div className="flex 2xl:gap-10 lg:gap-5 items-center w-2/4">
-                        <img src={image64} alt="img-userPhoto" className='2xl:w-[297px]  2xl:h-[297px] lg:w-[150px] lg:h-[150px]'/>
+                        <img src={image64} alt="img-userPhoto" className='2xl:w-[297px]  2xl:h-[297px] lg:w-[150px] lg:h-[150px] rounded-full'/>
                         <div className="flex flex-col 2xl:gap-4 lg:gap-2">
                             <h1 className="2xl:text-[40px] lg:text-[28px] font-medium">{information?.username}</h1>
                             <p className="2xl:text-[24px] lg:text-[14px] text-[#FFFFFF50]">{information?.groups}</p>
