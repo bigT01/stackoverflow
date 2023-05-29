@@ -11,7 +11,7 @@ import Answer from "@/Components/Comment/Answer";
 const Post = () => {
     const pathname = usePathname()
     const router = useRouter()
-    const {isAuth, isAnswer} = UseMainContext()
+    const {isAuth, isAnswer, userId} = UseMainContext()
     const [userInfo, setUserInfo] = useState<any>()
     const [post, setPost] = useState<any>()
     const [content, setContent] = useState<any>()
@@ -20,6 +20,8 @@ const Post = () => {
     const [userAva64, setUserAva64] = useState('')
     const [TagCode, setTagCode] = useState('python')
     const [code, setCode] = useState('#code code code')
+    const [isStar, setIsStar] = useState<boolean>(false)
+    const [starId, setStarId] = useState(0)
 
     useEffect(() => {
         if (!isAuth) {
@@ -37,12 +39,20 @@ const Post = () => {
 
     // get main data of post
     useEffect(() => {
-        // if(isAuth){
-            const id =(pathname.split('/')[2])
-            axios.get(`api/posts/${id}`)
-                .then(res => setPost(res.data))
-                .catch(err => console.log(err))
-        // }
+        const id = (pathname.split('/')[2])
+        axios.get(`api/posts/${id}`)
+            .then(res => setPost(res.data))
+            .catch(err => console.log(err))
+
+        axios.get(`api/starred/user/${userId}`)
+            .then(res => {
+                const isSt = res.data[0] ? res.data.filter((dataItem: any) => dataItem?.post?.postId === Number(id)) : null;
+                if(isSt.length >= 1){
+                    setIsStar(true)
+                    setStarId(isSt[0]?.starredId)
+                }
+            })
+            .catch(err => console.log(err))
     }, [pathname])
 
     useEffect(() => {
@@ -87,6 +97,28 @@ const Post = () => {
         }
     }, [userInfo])
 
+    const handleStar = () => {
+        const postId =(pathname.split('/')[2])
+        if(!isStar){
+            axios.post(`api/starred/createStarred`, {
+                userId,
+                postId
+            })
+                .then(res => {
+                    setIsStar(true)
+                    setStarId(res.data.starredId)
+                })
+                .catch(err => console.log(err))
+        }
+        if(isStar){
+            axios.delete(`api/starred/${starId}`)
+                .then(res => {
+                    setIsStar(false)
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
     return(
         <div className='text-white'>
             <section className="grid grid-cols-2 gap-10 w-full h-full mx-auto " style={{maxWidth: '95%'}}>
@@ -94,7 +126,15 @@ const Post = () => {
                 <div className='w-full h-full flex flex-col gap-5'>
                     {/*main problem*/}
                     <div className='bg-[#11111170] px-6 py-4 overflow-y-scroll overflow-x-hidden 2xl:h-[500px] lg:h-[400px]'>
-                        <h4 className='text-white font-bold 2xl:text-[30px] lg:text-[24px] mb-3'>{post?.title}</h4>
+                        <div className="flex justify-between items-center mb-3">
+                            <h4 className='text-white font-bold 2xl:text-[30px] lg:text-[24px] '>{post?.title}</h4>
+                            <button className="p-4 bg-gray-400 flex justify-center items-center rounded-full" onClick={() => handleStar()}>
+                                <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.0053 0.102295L12.9619 6.07867L19.576 7.03637L14.7906 11.6877L15.9202 18.2553L10.0053 15.1536L4.09039 18.2553L5.21992 11.6877L0.43457 7.03637L7.04862 6.07867L10.0053 0.102295Z" fill={`${isStar ? 'gold' : 'white'} `}/>
+                                </svg>
+                            </button>
+                        </div>
+
                         <div className='h-[1px] w-full bg-[#353535] mb-3'/>
                         <div className="flex flex-col justify-between">
                             <p className="text-white font-medium 2xl:text-[18px] lg:text-[16px] mb-5">{content ? content[0]?.text : null} </p>

@@ -117,7 +117,7 @@ const Navbar = () => {
 
                         {isProfile && <div className="absolute right-0 top-[100%] 2xl:w-[250px] lg:w-[200px] py-6 px-2 bg-black text-white z-20 flex flex-col items-end gap-2" ref={popupRef}>
                             <Link href='/profile' className="2xl:text-[18px] lg:text-[16px] text-white">Profile page</Link>
-                            <Link href='/' className="2xl:text-[18px] lg:text-[16px] text-white">Saved questions</Link>
+                            <Link href='/saved' className="2xl:text-[18px] lg:text-[16px] text-white">Saved questions</Link>
                             <button className="2xl:text-[18px] lg:text-[16px] text-white" onClick={() => setSettings(true)}>Settings</button>
                             <button className="2xl:text-[18px] lg:text-[16px] text-white" onClick={() => HandleLogOut()}>Log out</button>
                         </div>}
