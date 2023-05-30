@@ -31,6 +31,7 @@ const Saved = () => {
     }, []);
     return(
         <section className="w-full h-full mx-auto " style={{maxWidth: '95%'}}>
+            <h1 className="text-white 2xl:text-[40px] lg:text-[36px] font-bold">STARRED QUESTIONS</h1>
             <div className=' w-full overflow-x-hidden overflow-y-scroll 2xl:h-[84%] lg:h-[84%]'>
                 <div className=" grid gap-x-6 h-full w-full gap-y-12 2xl:grid-cols-3 lg:grid-cols-2">
 

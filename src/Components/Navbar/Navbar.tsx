@@ -152,7 +152,7 @@ const Navbar = () => {
                         </button>
 
 
-                        {isNotification && <div className="absolute right-0 top-[100%] 2xl:w-[400px] lg:w-[350px] py-6 px-2 bg-[#7e33bf] text-white z-20 flex flex-col items-end gap-2 max-h-[250px] overflow-y-scroll" ref={notificationRef}>
+                        {isNotification && <div className="absolute right-0 top-[100%] 2xl:w-[400px] lg:w-[350px] py-6 px-2 bg-[#00000090] text-white z-20 flex flex-col items-end gap-2 max-h-[250px] overflow-y-scroll" ref={notificationRef}>
                             {notificationData ? notificationData.map((item:any) => (
                                 <div key={item?.notificationId} className="flex flex-col gap-1 w-full">
                                     {/*header*/}
@@ -161,10 +161,12 @@ const Navbar = () => {
                                         <p className="text-white 2xl:text-[14px] lg:text-[12px]">{dateFormation(item?.createdAt)}</p>
                                     </div>
                                     {/*main information*/}
-                                    <div className="flex justify-between items-center w-full">
+                                    <div className="flex justify-between items-center w-full mb-1">
                                         <p className="text-white 2xl:text-[16px] lg:text-[14px]">{item?.description}</p>
                                     </div>
+                                    <div className="h-[2px] bg-white w-full"/>
                                 </div>
+
                             )) : null}
 
                         </div>}
