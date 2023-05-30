@@ -55,6 +55,7 @@ export const MainProvider = ({children}: MainProviderType) =>{
     const [tagName, setTagName] = useState<string>('');
     const [description, setDescription] = useState<string>('')
 
+
     //trigger
     const [isUpUserInfo, setIsUpUserInfo] = useState(false)
 

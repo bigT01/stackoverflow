@@ -14,11 +14,11 @@ const RatingImage = ({votes ,width, height, ...rest}: RatingImageProps) => {
     const [alt, setAlt] = useState('rank0')
 
     useEffect(() => {
-        if(votes > 6){
+        if(votes > 9){
             setRatingImg('/rating/rank2.png')
             setAlt('rank2')
         }
-        if(votes > 4 && votes < 6){
+        if(votes > 4 && votes < 10){
             setRatingImg('/rating/rank1.png')
             setAlt('rank1')
         }

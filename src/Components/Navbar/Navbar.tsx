@@ -23,6 +23,8 @@ const Navbar = () => {
     const [percentRating, setPercentRating] = useState<number>(0)
     const [notificationData, setNotificationData] = useState<any>(null)
 
+    const [point, setPoint] = useState<number>(0)
+
     useEffect(() => {
         if(userId){
             axios.get(`api/users/${userId}`)
@@ -41,6 +43,7 @@ const Navbar = () => {
     } ,[userId])
 
     useEffect(() => {
+        setPoint(userRank)
         if(userRank > 10){
             const NeonRank = userRank - 10
             setPercentRating((NeonRank * 340) / 15)
@@ -128,7 +131,7 @@ const Navbar = () => {
                     <div className='px-2 py-2 bg-black relative mr-10 w-[340px]'>
                         <div className="relative z-10 flex items-center gap-2">
                             <RatingImage votes={userRank} width={34} height={34}/>
-                            <p>{userRank} POINTS</p>
+                            <p>{point} POINTS</p>
                         </div>
 
                         <div className={`absolute top-0 left-0 z-0 h-full`}
