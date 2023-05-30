@@ -114,10 +114,10 @@ const PostPublishingComponent = () => {
                 {!isLoading && typeAns === "TEXT" && (
                     <div className="bg-[#00000050] px-4 py-2 mt-5  relative">
                         <input
-                            className="bg-black 2xl:text-[30px] lg:text-[24px] placeholder:text-[#FFFFFF20] px-4 py-2 w-full h-auto mb-2"
+                            className="bg-black 2xl:text-[28px] lg:text-[24px] placeholder:text-[#FFFFFF20] px-4 py-2 w-full h-auto mb-2"
                             placeholder='Type title' value={publishText} onChange={(e) => setPublishTexting(e.target.value)}/>
                         <textarea
-                            className="bg-black 2xl:text-[30px] lg:text-[24px] placeholder:text-[#FFFFFF20] px-4 py-2 w-full h-[250px]"
+                            className="bg-black 2xl:text-[20px] lg:text-[18px] placeholder:text-[#FFFFFF20] px-4 py-2 w-full h-[250px]"
                             placeholder='Type text' value={description} onChange={(e) => setPublishDescription(e.target.value)}/>
                         <div className="flex gap-5 items-center">
                             <p className="2xl:text-[24px] lg:text-[20px]">Tag</p>

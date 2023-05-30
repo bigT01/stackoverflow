@@ -35,8 +35,6 @@ const Comments = ({authorId, postStatus, postTag} : CommentsProps) => {
                     )
                 : null
             }
-
-
         </div>
     )
 }
