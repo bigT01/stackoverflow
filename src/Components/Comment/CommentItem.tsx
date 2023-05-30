@@ -78,16 +78,18 @@ const CommentItem = ({id, content, author, votedBy, votes, status, createdAt, ti
     }
 
     const handleComment = () => {
-        axios.post('api/comments/createComment', {
-            userId: userId,
-            answerId: id,
-            comment: commentText
-        })
-            .then(res => {
-                setIsHandleCommentPost(true)
-                setCommentText('')
+        if(commentText){
+            axios.post('api/comments/createComment', {
+                userId: userId,
+                answerId: id,
+                comment: commentText
             })
-            .catch(err => {console.log(err)})
+                .then(res => {
+                    setIsHandleCommentPost(true)
+                    setCommentText('')
+                })
+                .catch(err => {console.log(err)})
+        }
     }
 
     useEffect(() => {
