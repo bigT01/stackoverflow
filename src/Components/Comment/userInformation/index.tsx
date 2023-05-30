@@ -39,7 +39,7 @@ const UserInformation = ({author, createdAt, status, postAuthorId, answerId, pos
              onMouseLeave={handleMouseLeave}>
             <div className="flex gap-4 items-center">
                 {/*user image*/}
-                <img src={author?.ava ? author?.ava : '/userPhoto.png'} alt={`user-img`} width={50} height={50}/>
+                <img src={author?.ava ? author?.ava : '/userPhoto.png'} alt={`user-img`} width={50} height={50} className="rounded-full"/>
                 {/*user information and date*/}
                 <div className="flex items-baseline gap-2">
                     <div className="flex flex-col gap-1">
