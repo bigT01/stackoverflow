@@ -10,7 +10,7 @@ type RatingUserProps = {
 
 const RatingUser = ({rating, imgURL, nick, votes, ratingIMGURL}:RatingUserProps) => {
     return(
-        <tr className='border-b-8 border-transparent'>
+        <tr className='border-b-8 border-transparent hover:bg-[#11111170] px-4 py-2'>
             <td>{rating}</td>
             <td className='flex items-center'><img src={`${imgURL}`} alt={`${imgURL}-img`}
                                                      width={42} height={42} className='mr-3 rounded-full'/>
