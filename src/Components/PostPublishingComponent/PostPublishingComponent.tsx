@@ -1,5 +1,4 @@
 'use client';
-import AceEditor from "react-ace";
 import React, {useEffect, useRef, useState} from "react";
 import HoveringComponent from "@/Components/Comment/hoveringComponent";
 import {UseMainContext} from "@/Context/MainContext";
