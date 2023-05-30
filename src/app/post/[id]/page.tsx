@@ -7,6 +7,7 @@ import {UseMainContext} from "@/Context/MainContext";
 import axios from "@/axios";
 import Comments from "@/Components/Comment/Comments";
 import Answer from "@/Components/Comment/Answer";
+import Star from "@/Components/Star";
 
 const Post = () => {
     const pathname = usePathname()
@@ -21,7 +22,6 @@ const Post = () => {
     const [TagCode, setTagCode] = useState('python')
     const [code, setCode] = useState('#code code code')
     const [isStar, setIsStar] = useState<boolean>(false)
-    const [starId, setStarId] = useState(0)
 
     useEffect(() => {
         if (!isAuth) {
@@ -47,9 +47,10 @@ const Post = () => {
         axios.get(`api/starred/user/${userId}`)
             .then(res => {
                 const isSt = res.data[0] ? res.data.filter((dataItem: any) => dataItem?.post?.postId === Number(id)) : null;
-                if(isSt.length >= 1){
-                    setIsStar(true)
-                    setStarId(isSt[0]?.starredId)
+                if(res.data[0]){
+                    if(isSt.length >= 1){
+                        setIsStar(true)
+                    }
                 }
             })
             .catch(err => console.log(err))
@@ -98,25 +99,20 @@ const Post = () => {
     }, [userInfo])
 
     const handleStar = () => {
-        const postId =(pathname.split('/')[2])
-        if(!isStar){
-            axios.post(`api/starred/createStarred`, {
-                userId,
-                postId
-            })
-                .then(res => {
-                    setIsStar(true)
-                    setStarId(res.data.starredId)
-                })
-                .catch(err => console.log(err))
-        }
-        if(isStar){
-            axios.delete(`api/starred/${starId}`)
-                .then(res => {
+        const postId = (pathname.split('/')[2])
+        axios.post(`api/starred/createStarred`, {
+            userId,
+            postId
+        })
+            .then(res => {
+                if(res.status === 200){
                     setIsStar(false)
-                })
-                .catch(err => console.log(err))
-        }
+                }
+                if(res.status === 201) {
+                    setIsStar(true)
+                }
+            })
+            .catch(err => console.log(err))
     }
 
     return(
@@ -129,9 +125,7 @@ const Post = () => {
                         <div className="flex justify-between items-center mb-3">
                             <h4 className='text-white font-bold 2xl:text-[30px] lg:text-[24px] '>{post?.title}</h4>
                             <button className="p-4 bg-gray-400 flex justify-center items-center rounded-full" onClick={() => handleStar()}>
-                                <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.0053 0.102295L12.9619 6.07867L19.576 7.03637L14.7906 11.6877L15.9202 18.2553L10.0053 15.1536L4.09039 18.2553L5.21992 11.6877L0.43457 7.03637L7.04862 6.07867L10.0053 0.102295Z" fill={`${isStar ? 'gold' : 'white'} `}/>
-                                </svg>
+                                <Star isStar={isStar} />
                             </button>
                         </div>
 
