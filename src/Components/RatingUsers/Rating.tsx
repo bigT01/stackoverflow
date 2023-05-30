@@ -30,7 +30,9 @@ const Rating = () => {
                 </tr>
                 </thead>
                 <tbody >
-                {rank ? rank.map((rankItem: any, index: number) => (<RatingUser key={rankItem.id} rating={index+1} imgURL={rankItem?.ava ? `${rankItem?.ava}` : '/userPhoto.png'} nick={`@${rankItem?.username}`} votes={rankItem?.rank} ratingIMGURL={'/rank0.png'} />)) : null}
+                {rank ? rank.map((rankItem: any, index: number) => (
+                    <RatingUser key={rankItem.userId} rating={index+1} imgURL={rankItem?.ava ? `${rankItem?.ava}` : '/userPhoto.png'} nick={`@${rankItem?.username}`} votes={rankItem?.rank} id={rankItem.userId} />
+                )) : null}
                 </tbody>
             </table>
         </div>

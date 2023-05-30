@@ -1,29 +1,26 @@
 'use client';
-import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
-import {UseMainContext} from "@/Context/MainContext";
-import axios from "@/axios";
 import RatingImage from "@/Components/RatingImage";
 import PostShort from "@/Components/Posts/PostShort";
+import {useEffect, useState} from "react";
+import axios from "@/axios";
+import {usePathname, useRouter} from "next/navigation";
+import {UseMainContext} from "@/Context/MainContext";
 
-const Profile = () => {
+const UserProfile = () => {
     const router = useRouter()
-    const {isAuth, userId, userRank, setSearch} = UseMainContext()
+    const pathname = usePathname()
+    const {isAuth, setSearch} = UseMainContext()
 
     const [isPopular, setIsPopular] = useState<boolean>(true)
     const [information, setInformation] = useState<any>()
     const [image64, setImage64] = useState<any>('/avatarka.png')
     const [posts, setPosts] = useState<any>(null)
+    const [userRank, setUserRank] = useState<number>(0)
 
     useEffect(() => {
         setSearch('')
         if(!isAuth) {
             router.push('/login')
-        }
-        if(isAuth){
-            axios.get(`api/users/${userId}`)
-                .then(res => {setInformation(res.data)})
-                .catch(err => {console.log(err)})
         }
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
@@ -35,26 +32,32 @@ const Profile = () => {
     }, [])
 
     useEffect(() => {
-        if(information){
-            if(information?.ava){
-                setImage64(information?.ava)
-            }
+        if(isAuth){
+            const id = (pathname.split('/')[2])
+            axios.get(`api/users/${id}`)
+                .then(res => {
+                    setInformation(res.data)
+                    setUserRank(res?.data?.rank)
+                    res?.data?.ava ?setImage64(res?.data?.ava) : null
+                })
+                .catch(err => {console.log(err)})
         }
-    }, [information])
+    }, [pathname])
 
     useEffect(() => {
-        if(isPopular){
-            axios.get(`api/users/myPosts/${userId}`)
+        if(isPopular && pathname){
+            const id = (pathname.split('/')[2])
+            axios.get(`api/users/myPosts/${id}`)
                 .then(res => setPosts(res?.data))
                 .catch(err => console.log(err))
         }
-        else{
-            axios.get(`api/users/myAnswers/${userId}`)
+        if(!isPopular && pathname){
+            const id = (pathname.split('/')[2])
+            axios.get(`api/users/myAnswers/${id}`)
                 .then(res => setPosts(res?.data))
                 .catch(err => console.log(err))
         }
-    }, [isPopular])
-
+    }, [isPopular, pathname])
     return(
         <section className=' w-full h-full relative ' >
             {/*header*/}
@@ -105,10 +108,14 @@ const Profile = () => {
                 <div className=' w-full overflow-x-hidden overflow-y-scroll 2xl:h-[40%] lg:h-[50%]'>
                     <div className=" grid gap-x-6 h-full w-full gap-y-12 2xl:grid-cols-3 lg:grid-cols-2" style={{gridAutoRows: 95}}>
 
-                        {posts ? posts.map((postItem:any) => (
+                        {posts ? posts.map((postItem:any) => isPopular ? (
+                            <PostShort key={postItem?.postId} id={postItem?.postId} title={postItem?.title}
+                                       content={postItem?.content} tags={postItem?.tag?.name} answers={postItem?.numberOfAnsers}
+                                       status={postItem?.status}/>) : (
                             <PostShort key={postItem?.post?.postId} id={postItem?.post?.postId} title={postItem?.post?.title}
                                        content={postItem?.post?.content} tags={postItem?.post?.tag?.name} answers={postItem?.post?.numberOfAnsers}
-                                       status={postItem?.post?.status}/>)) : null}
+                                       status={postItem?.post?.status}/>
+                        )) : null}
 
                         <div className="pb-20" />
                     </div>
@@ -118,4 +125,4 @@ const Profile = () => {
     )
 }
 
-export default Profile
+export default UserProfile
