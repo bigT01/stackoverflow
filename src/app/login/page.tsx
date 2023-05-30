@@ -8,7 +8,7 @@ import Loading from "@/Components/Loading";
 
 const Login = () => {
     const router = useRouter()
-    const {isAuth, setAuth, setUser, setRankUser} = UseMainContext()
+    const {isAuth, setAuth, setUser, setRankUser, setSearch} = UseMainContext()
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [isSignIn, setIsSignIn] = useState(true)
@@ -38,6 +38,7 @@ const Login = () => {
     const [isSignUpEnter, setIsSignUpEnter] = useState(false)
 
     useEffect(() => {
+        setSearch('')
         // Disable scrolling on mount
         document.body.style.overflow = 'hidden';
 

@@ -12,7 +12,7 @@ import Star from "@/Components/Star";
 const Post = () => {
     const pathname = usePathname()
     const router = useRouter()
-    const {isAuth, isAnswer, userId} = UseMainContext()
+    const {isAuth, isAnswer, userId, setSearch} = UseMainContext()
     const [userInfo, setUserInfo] = useState<any>()
     const [post, setPost] = useState<any>()
     const [content, setContent] = useState<any>()
@@ -34,7 +34,7 @@ const Post = () => {
         return () => {
             document.body.style.overflow = 'auto';
         };
-
+        setSearch('')
     }, []);
 
     // get main data of post

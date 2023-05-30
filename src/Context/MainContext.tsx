@@ -33,6 +33,8 @@ type MainContextType = {
     setUpUserInfo: (isUpUserInfo: boolean) => void,
     isLoading: boolean,
     setLoading: (isLoading: boolean) => void,
+    searchText: string,
+    setSearch: (text: string) => void,
 }
 
 
@@ -56,11 +58,17 @@ export const MainProvider = ({children}: MainProviderType) =>{
     const [codeText, setCodeText] = useState<any>('');
     const [PublishImage, setPublishImage] = useState<string>('');
     const [tagName, setTagName] = useState<string>('');
-    const [description, setDescription] = useState<string>('')
+    const [description, setDescription] = useState<string>('');
+
+    const [searchText, setSearchText] = useState<string>('')
 
 
     //trigger
     const [isUpUserInfo, setIsUpUserInfo] = useState(false)
+
+    const setSearch = (text:string) => {
+        setSearchText(text)
+    }
 
     const setAuth = (isAuth: boolean) => {
         setIsAuth(isAuth)
@@ -153,7 +161,9 @@ export const MainProvider = ({children}: MainProviderType) =>{
             isUpUserInfo,
             setUpUserInfo,
             isLoading,
-            setLoading
+            setLoading,
+            searchText,
+            setSearch
         }}>
             {children}
         </MainContext.Provider>

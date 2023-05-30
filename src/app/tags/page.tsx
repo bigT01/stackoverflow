@@ -7,12 +7,13 @@ import axios from "@/axios";
 
 const Tags = () => {
     const router = useRouter()
-    const {isAuth} = UseMainContext()
+    const {isAuth, setSearch} = UseMainContext()
 
     const [isPopular, setIsPopular] = useState<boolean>(true)
     const [tags, setTags] = useState<any>()
 
     useEffect(() => {
+        setSearch('')
         if(!isAuth) {
             router.push('/login')
         }

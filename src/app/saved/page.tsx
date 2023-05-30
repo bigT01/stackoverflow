@@ -7,10 +7,11 @@ import PostShort from "@/Components/Posts/PostShort";
 
 const Saved = () => {
     const router = useRouter()
-    const {isAuth, userId} = UseMainContext()
+    const {isAuth, userId, setSearch} = UseMainContext()
     const [savedPosts, setSavedPosts] = useState<any>(null)
 
     useEffect(() => {
+        setSearch('')
         if (!isAuth) {
             router.push('/login')
         }

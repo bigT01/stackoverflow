@@ -13,10 +13,11 @@ import PostPublishingComponent from "@/Components/PostPublishingComponent/PostPu
 
 export default function Home() {
     const router = useRouter()
-    const {isAuth, setPublishing, isPublish, setAnswer} = UseMainContext()
+    const {isAuth, setPublishing, isPublish, setAnswer, setSearch} = UseMainContext()
     const [QuestionType, setQuestionType] = useState<'RECENT QUESTIONS' | 'TOP QUESTIONS' | 'UNANSWERED' | 'UNACCEPTED'>('RECENT QUESTIONS')
 
     useEffect(() => {
+        setSearch('')
         if (!isAuth) {
             router.push('/login')
         }

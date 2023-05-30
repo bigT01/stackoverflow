@@ -8,13 +8,14 @@ import RatingImage from "@/Components/RatingImage";
 
 const Profile = () => {
     const router = useRouter()
-    const {isAuth, userId, userRank} = UseMainContext()
+    const {isAuth, userId, userRank, setSearch} = UseMainContext()
 
     const [isPopular, setIsPopular] = useState<boolean>(true)
     const [information, setInformation] = useState<any>()
     const [image64, setImage64] = useState<any>('/avatarka.png')
 
     useEffect(() => {
+        setSearch('')
         if(!isAuth) {
             router.push('/login')
         }

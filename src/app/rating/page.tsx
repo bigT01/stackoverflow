@@ -6,10 +6,11 @@ import RatingUser from "@/Components/RatingUsers/RatingUser";
 import axios from "@/axios";
 const Rating = () => {
     const router = useRouter()
-    const {isAuth} = UseMainContext()
+    const {isAuth, setSearch} = UseMainContext()
     const [rank, setRank] = useState<any>()
 
     useEffect(() => {
+        setSearch('')
         if (!isAuth) {
             router.push('/login')
         }

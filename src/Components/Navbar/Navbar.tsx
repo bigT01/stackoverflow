@@ -12,7 +12,7 @@ import dateFormation from "@/Components/dateFormation";
 const Navbar = () => {
     const pathName = usePathname()
     const router = useRouter()
-    const { isAuth, setAuth, setUser, userRank, setSettings, isUpUserInfo, userId, setUpUserInfo } = UseMainContext()
+    const { isAuth, setAuth, setUser, userRank, setSettings, isUpUserInfo, userId, setUpUserInfo, setSearch, searchText } = UseMainContext()
     const popupRef = useRef(null);
     const notificationRef = useRef(null);
 
@@ -124,7 +124,7 @@ const Navbar = () => {
 
                     <input type="text"
                            className='h-auto w-full border-none text-[20px] placeholder-[#ffffff50] focus-visible:outline-none'
-                           style={{background: 'none'}} placeholder='Search questions by key words...'/>
+                           style={{background: 'none'}} value={searchText} placeholder='Search questions by key words...' onClick={() => {router.push('/search')}} onChange={(e) => setSearch(e.target.value)}/>
                 </div>
                 <div className='ml-auto flex items-center'>
 
