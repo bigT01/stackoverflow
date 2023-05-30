@@ -30,7 +30,9 @@ type MainContextType = {
     isSettings: boolean,
     setSettings: (rank: boolean) => void,
     isUpUserInfo: boolean,
-    setUpUserInfo:(isUpUserInfo: boolean) => void,
+    setUpUserInfo: (isUpUserInfo: boolean) => void,
+    isLoading: boolean,
+    setLoading: (isLoading: boolean) => void,
 }
 
 
@@ -47,7 +49,8 @@ export const MainProvider = ({children}: MainProviderType) =>{
     const [userRank, setUserRank] = useState<number>(0)
     const [isAnswer, setIsAnswer] = useState<boolean>(false);
     const [isPublish, setIsPublish] = useState<boolean>(false);
-    const [isSettings, setIsSettings] = useState<boolean>(false)
+    const [isSettings, setIsSettings] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [publishText, setPublishText] = useState<string>('');
     const [codeText, setCodeText] = useState<any>('');
@@ -119,6 +122,10 @@ export const MainProvider = ({children}: MainProviderType) =>{
         setIsUpUserInfo(isUpUserInfo)
     }
 
+    const setLoading = (isLoading:boolean) => {
+        setIsLoading(isLoading)
+    }
+
     return(
         <MainContext.Provider value={{
             isAuth,
@@ -144,7 +151,9 @@ export const MainProvider = ({children}: MainProviderType) =>{
             isSettings,
             setSettings,
             isUpUserInfo,
-            setUpUserInfo
+            setUpUserInfo,
+            isLoading,
+            setLoading
         }}>
             {children}
         </MainContext.Provider>

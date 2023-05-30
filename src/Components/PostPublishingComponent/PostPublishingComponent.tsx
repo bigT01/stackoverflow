@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import HoveringComponent from "@/Components/Comment/hoveringComponent";
 import {UseMainContext} from "@/Context/MainContext";
 import axios from "@/axios";
+import Loading from "@/Components/Loading";
 
 const PostPublishingComponent = () => {
     const {isPublish, setPublishing, publishText, setPublishTexting, PublishImage, setPublishingImage, codeText, setCodeTexting, userId, tagName, setTag, description, setPublishDescription} = UseMainContext()
@@ -11,6 +12,7 @@ const PostPublishingComponent = () => {
 
     const [typeAns, setTypeAns] = useState<'TEXT' | 'CODE' | 'IMAGE'>('TEXT')
     const [selectedImage, setSelectedImage] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
     const handleImageDrop = (event: any) => {
@@ -40,6 +42,7 @@ const PostPublishingComponent = () => {
 
     const handlePublish = () => {
         if (codeText && publishText && PublishImage) {
+            setIsLoading(true)
             const content = [{text: description}, {code: codeText}, {image: PublishImage}]
             axios.post('api/posts/createPost', {
                 title: publishText,
@@ -49,8 +52,12 @@ const PostPublishingComponent = () => {
             })
                 .then(res => {
                     setPublishing(false)
+                    setIsLoading(false)
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err)
+                    setIsLoading(false)
+                })
         }
     }
 
@@ -105,7 +112,7 @@ const PostPublishingComponent = () => {
                     </button>
                 </div>
 
-                {typeAns === "TEXT" && (
+                {!isLoading && typeAns === "TEXT" && (
                     <div className="bg-[#00000050] px-4 py-2 mt-5  relative">
                         <input
                             className="bg-black 2xl:text-[30px] lg:text-[24px] placeholder:text-[#FFFFFF20] px-4 py-2 w-full h-auto mb-2"
@@ -121,14 +128,14 @@ const PostPublishingComponent = () => {
                     </div>
                 )}
 
-                {typeAns === "CODE" && isPublish && (
+                {!isLoading &&typeAns === "CODE" && isPublish && (
                     <div className="bg-[#00000050] px-4 py-2 mt-5 h-[87%] relative" id={'code_publish'}>
                         <div className="mb-2" />
                         <textarea className="text-white w-full bg-inherit focus-visible:outline-none h-[250px]" value={codeText} onChange={(e) => {onChange(e.target.value)}} />
                     </div>
                 )}
 
-                {typeAns === "IMAGE" && (
+                {!isLoading && typeAns === "IMAGE" && (
                     <div className="bg-[#00000050] px-4 py-2 mt-5 h-[400px] relative" onDrop={handleImageDrop}
                          onDragOver={handleDragOver}>
                         <HoveringComponent/>
@@ -144,6 +151,11 @@ const PostPublishingComponent = () => {
                             </>
 
                         ) : null}
+                    </div>
+                )}
+                {isLoading && (
+                    <div className="w-full h-[400px] flex justify-center items-center">
+                        <Loading/>
                     </div>
                 )}
             </div>

@@ -4,12 +4,13 @@ import {usePathname} from "next/navigation";
 
 const AnswerButton = () => {
     const pathname = usePathname()
-    const {publishText, codeText, PublishImage, userId, setAnswer} = UseMainContext()
+    const {publishText, codeText, PublishImage, userId, setAnswer, setLoading} = UseMainContext()
 
     const handleAnswer = () => {
         if (codeText && publishText && PublishImage) {
             const content = [{text: publishText}, {code: codeText}, {image: PublishImage}]
             const id = Number(pathname.split('/')[2])
+            setLoading(true)
             axios.post('api/answers/createAnswer', {
                 title: publishText,
                 content: content,
@@ -18,8 +19,12 @@ const AnswerButton = () => {
             })
                 .then(res => {
                     setAnswer(false)
+                    setLoading(false)
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    setLoading(false)
+                    console.log(err)
+                })
         }
     }
 

@@ -6,9 +6,10 @@ import TextType from "@/Components/Comment/TextType";
 import CodeType from "@/Components/Comment/CodeType";
 import ImageType from "@/Components/Comment/ImageType";
 import AnswerUserInfo from "@/Components/Comment/userInformation/AnswerUserInfo";
+import Loading from "@/Components/Loading";
 
 const Answer = () => {
-    const {setAnswer, isAnswer} = UseMainContext()
+    const {setAnswer, isAnswer, isLoading, setLoading} = UseMainContext()
     const [typeAns, setTypeAns] = useState<'TEXT' | 'CODE' | 'IMAGE'>('TEXT')
 
 
@@ -41,9 +42,17 @@ const Answer = () => {
                     </button>)}
                 </div>
             </div>
-            {typeAns === "TEXT" && isAnswer && (<TextType/>)}
-            {typeAns === "CODE" && isAnswer && <CodeType />}
-            {typeAns === "IMAGE" && isAnswer && <ImageType />}
+            {typeAns === "TEXT" && isAnswer && !isLoading && (<TextType/>)}
+
+            {typeAns === "CODE" && isAnswer && !isLoading  && (<CodeType />)}
+
+            {typeAns === "IMAGE" && isAnswer && !isLoading && (<ImageType />)}
+
+            {isLoading && (
+                <div className="px-6 py-4 flex justify-center items-center w-full h-full overflow-y-scroll 2xl:max-h-[600px] lg:max-h-[500px]">
+                    <Loading />
+                </div>
+            )}
         </div>
     )
 }
