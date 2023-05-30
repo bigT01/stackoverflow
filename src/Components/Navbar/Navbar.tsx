@@ -46,14 +46,14 @@ const Navbar = () => {
         setPoint(userRank)
         if(userRank > 10){
             const NeonRank = userRank - 10
-            setPercentRating((NeonRank * 340) / 15)
+            setPercentRating((NeonRank * 100) / 15)
         }
         if(userRank <= 10 && userRank > 5){
             const goldRank = userRank - 5
-            setPercentRating((goldRank * 340) / 5)
+            setPercentRating((goldRank * 100) / 5)
         }
         if(userRank <= 5 ){
-            setPercentRating((userRank * 340) / 5)
+            setPercentRating((userRank * 100) / 5)
         }
     }, [userRank])
 
