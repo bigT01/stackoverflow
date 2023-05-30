@@ -1,5 +1,4 @@
 'use client';
-import Image from "next/image";
 import {UseMainContext} from "@/Context/MainContext";
 import {useState} from "react";
 import TextType from "@/Components/Comment/TextType";
@@ -27,8 +26,7 @@ const Answer = () => {
                     {isAnswer && (<button className={`2xl:px-8 lg:px-6 py-2 ${typeAns === 'IMAGE' ? 'text-white' : 'text-[#FFFFFF50]'} 2xl:text-[18px] lg:text-[16px]`}
                              style={{border: `1px solid ${typeAns === 'IMAGE' ? 'white' : '#FFFFFF50'}`}} onClick={(e) => setTypeAns('IMAGE')}>IMAGE</button>)}
                     {/*answer button*/}
-                    {!isAnswer ? (<button className="px-4 py-2 h-fit"
-                                      style={{background: 'linear-gradient(88.76deg, #393939 0.58%, #4D4D4D 98.96%)'}}
+                    {!isAnswer ? (<button className="px-4 py-2 h-fit bg-btn-liner"
                                       onClick={() => {
                                           setAnswer(true)
                                       }}>
