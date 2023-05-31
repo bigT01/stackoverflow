@@ -78,15 +78,15 @@ const UserProfile = () => {
                     {/*user additional information*/}
                     <div className="flex gap-10 pt-10">
                         <div className="bg-[#c0c0c010] h-fit 2xl:gap-3 lg:gap-1 flex items-center justify-center flex-col 2xl:px-16 lg:px-10 2xl:py-4 lg:py-2" style={{backdropFilter: 'blur(2px)'}}>
-                            <h5 className="2xl:text-[24px] lg:text-[18px] text-white">17</h5>
+                            <h5 className="2xl:text-[24px] lg:text-[18px] text-white">{information?.numberOfAnswers}</h5>
                             <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF50]">Answers</p>
                         </div>
                         <div className="bg-[#c0c0c010] h-fit 2xl:gap-3 lg:gap-1 flex items-center justify-center flex-col px-16 lg:px-10 2xl:py-4 lg:py-2" style={{backdropFilter: 'blur(2px)'}}>
-                            <h5 className="2xl:text-[24px] lg:text-[18px] text-white">313</h5>
+                            <h5 className="2xl:text-[24px] lg:text-[18px] text-white">{information?.rank}</h5>
                             <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF50]">Votes</p>
                         </div>
                         <div className="bg-[#c0c0c010] h-fit 2xl:gap-3 lg:gap-1 flex items-center justify-center flex-col lg:px-10 2xl:py-4 lg:py-2" style={{backdropFilter: 'blur(2px)'}}>
-                            <h5 className="2xl:text-[24px] lg:text-[18px] text-white">23</h5>
+                            <h5 className="2xl:text-[24px] lg:text-[18px] text-white">{information?.numberOfPosts}</h5>
                             <p className="2xl:text-[20px] lg:text-[16px] text-[#FFFFFF50]">Posted questions</p>
                         </div>
                     </div>
